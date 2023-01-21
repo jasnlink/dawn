@@ -29,7 +29,7 @@
     {%- endunless -%}
 
     <title>
-      {{ page_title }}
+      {{ page_title }} &ndash; Plush toys, plushies and squishies.
       {%- if current_tags %}
         &ndash; tagged "{{ current_tags | join: ', ' }}"
       {%- endif -%}
@@ -37,7 +37,7 @@
         &ndash; Page {{ current_page -}}
       {%- endif -%}
       {%- unless page_title contains shop.name %}
-        &ndash; {{ shop.name -}} | Plush toys, plushies and squishies.
+        &ndash; {{ shop.name -}}
       {%- endunless -%}
     </title>
 
