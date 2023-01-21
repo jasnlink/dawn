@@ -14,13 +14,11 @@
     <link rel="stylesheet" href="{{ 'output.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'glide.core.min.css' | asset_url }}">
 
-    {%- if settings.favicon != blank -%}
-      <link
-        rel="icon"
-        type="image/png"
-        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
-      >
-    {%- endif -%}
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ 'favicon.png' | asset_url }}"
+    >
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link
@@ -39,7 +37,7 @@
         &ndash; Page {{ current_page -}}
       {%- endif -%}
       {%- unless page_title contains shop.name %}
-        &ndash; {{ shop.name -}}
+        &ndash; {{ shop.name -}} | Plush toys, plushies and squishies.
       {%- endunless -%}
     </title>
 
