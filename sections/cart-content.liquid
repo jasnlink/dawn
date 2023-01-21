@@ -1,0 +1,62 @@
+{% if cart.empty? == true %}
+    <div id="cart-drawer-content" class="shrink">
+        <div class="container mt-12 mx-auto">
+            <div class="text-3xl text-center">Your bag is ready for you to add some must-haves!</div>
+            <div role="button" id="cart-shop-btn" class="mt-8 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Shop now</div>
+        </div>
+    </div>
+{% else %}
+    <div id="cart-drawer-items" class="shrink overflow-auto">
+        <div class="container mt-4 mb-5 mx-auto flex flex-col gap-y-2">
+            {% for line_item in cart.items %}
+                <div class="flex items-center bg-pink-100 rounded-md gap-x-4">
+                    <div>
+                        <a href="{{ line_item.url }}" class="block aspect-square w-28 h-28 select-none">
+                            <picture>
+                                <img src="{{ line_item.image | image_url }}" height="200" width="200" loading="lazy" class="h-full w-auto object-cover rounded-l-md" />
+                            </picture>
+                        </a>
+                    </div>
+                    <div>
+                        <div class="flex flex-col justify-center items-start py-2 pr-3">
+                            <a href="{{ line_item.url }}" class="xl:text-lg">{{ line_item.title | truncate: 25 }}</a>
+                            <span class="font-semibold mt-1 sm:mt-0 xl:text-lg">{{ line_item.final_price | money_with_currency }}</span>
+                            <div class="mt-1.5 flex justify-center items-center gap-2 border border-gray-500 rounded-md">
+                                <div role="button" data-cart-action="minus" data-cart-item-id="{{ forloop.index }}" data-cart-item-quantity="{{ line_item.quantity }}" class="py-1 px-2">{% render 'icon-minus', class: 'h-3 w-3 text-gray-700' %}</div>
+                                <div class="select-none text-gray-900">{{ line_item.quantity }}</div>
+                                <div role="button" data-cart-action="plus" data-cart-item-id="{{ forloop.index }}" data-cart-item-quantity="{{ line_item.quantity }}" class="py-1 px-2">{% render 'icon-plus', class: 'h-3 w-3 text-gray-700' %}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="cart-drawer-footer" class="mt-auto shrink bg-pink-300">
+        <div class="pt-6 pb-7">
+            <div class="container mx-auto px-8 xl:px-24 text-black">
+                <div class="flex justify-between">
+                    <div class="font-semibold">Subtotal</div>
+                    <div class="font-bold">{{ cart.items_subtotal_price | money_with_currency }}</div>
+                </div>
+                <div class="mt-2 flex justify-between">
+                    <div class="font-semibold">Shipping</div>
+                    <div class="font-bold">FREE</div>
+                </div>
+                <a href="{{ routes.root_url }}{{ 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
+            </div>
+        </div>
+        <div class="bg-pink-400">
+            <div class="mx-auto pt-2 pb-3">
+                <div class="flex flex-col gap-y-3 lg:flex-row items-center justify-center gap-x-4">
+                    <div class="inline-flex justify-center gap-y-2 gap-x-0.5 flex-wrap">
+                        {% for type in shop.enabled_payment_types -%}
+                            {{ type | payment_type_svg_tag: class: 'h-6 sm:h-6 w-auto' }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div data-secure-action role="button" class="w-fit mt-4 mx-auto text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
+            </div>
+        </div>
+    </div>
+{% endif %}

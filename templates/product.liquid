@@ -1,0 +1,62 @@
+<div class="container pt-8 pb-12 mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 xl:gap-24">
+        <div>
+            <div class="glide">
+                <div class="glide__track" data-glide-el="track">
+                    <ul class="glide__slides">
+                        {% for image in product.images %}
+                            <li class="glide__slide">
+                                <picture>
+                                    <img src="{{ image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                </picture>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                    <div class="mt-4 grid grid-cols-6 gap-4" data-glide-el="controls">
+                        {% for image in product.images %}
+                            <div role="button" data-glide-dir="={{ forloop.index0 }}">
+                                <picture>
+                                    <img src="{{ image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                </picture>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="h-full pt-6 lg:pt-2 xl:pt-24">
+                <div class="container py-4 mx-auto">
+                    <div class="inline-flex gap-2">
+                        {% for collection in product.collections %}
+                            <div class="bg-pink-200 rounded-md px-2 py-1 text-sm font-semibold text-gray-700">{{ collection.title }}</div>
+                        {% endfor %}
+                        {% for tag in product.tags %}
+                            <div class="bg-pink-200 rounded-md px-2 py-1 text-sm font-semibold text-gray-700">{{ tag }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-4xl font-semibold mt-4">{{ product.title }}</div>
+                    <div class="mt-6 text-lg">{{ product.description }}</div>
+                    <div class="mt-4">
+                        <span>Availability:</span>
+                        {% if product.available == true %}
+                            {% assign product_availability_text = 'In stock' %}
+                            {% assign product_availability_class = ' bg-green-500' %}
+                        {% else %}
+                            {% assign product_availability_text = 'Out of stock' %}
+                            {% assign product_availability_class = ' bg-red-500' %}
+                        {% endif %}
+                        <span class="ml-2 rounded-md px-2 py-1 text-sm font-semibold text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
+                    </div>
+                    <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-8 w-full xl:w-1/2 bg-sky-500 text-lg text-white font-semibold py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
+                        <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-7 w-7 text-white', fill: 'none' %}</span>
+                        <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-7 w-7 text-white' %}</span>
+                        <span data-add-state="default">Add to bag</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="bg-white rounded-md">
+    <div>
+        <a href="{{ product.url }}" class="block">
+            <picture>
+                <img src="{{ product.featured_image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-t-md" />
+            </picture>
+        </a>
+    </div>
+    <div class="container pt-3 pb-5">
+        <div class="min-h-[3.5rem]">
+            <a href="{{ product.url }}" class="block">
+                <span class="text-lg">{{ product.title }}</span>
+            </a>
+        </div>
+        <div class="mt-0.5">
+            <a href="{{ product.url }}" class="block">
+                <span class="font-semibold text-lg">{{ product.price | money_with_currency }}</span>
+            </a>
+        </div>
+        {% if product.variants.size > 1 %}
+            <button type="button" class="mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75">See options</button>
+        {% else %}
+            <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-4 w-full bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
+                <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-6 w-6 text-white', fill: 'none' %}</span>
+                <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-6 w-6 text-white' %}</span>
+                <span data-add-state="default">Add to bag</span>
+            </button>
+        {% endif %}
+    </div>
+</div>
