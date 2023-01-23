@@ -23,7 +23,7 @@
                         {% for image in product.images %}
                             <div role="button" data-glide-dir="={{ forloop.index0 }}">
                                 <picture>
-                                    <img src="{{ image | image_url: width: 120, height: 120, }}" height="120" width="120" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    <img src="{{ image | image_url: width: 120, height: 120 }}" height="120" width="120" loading="lazy" class="w-full h-auto object-cover rounded-md" />
                                 </picture>
                             </div>
                         {% endfor %}

@@ -1,106 +1,106 @@
 <footer>
-  <div class="bg-pink-200">
-    <div class="container mx-auto py-4">
-      <div class="flex flex-col gap-y-3 lg:flex-row items-center justify-center gap-x-4">
-        <span class="font-bold text-lg text-zinc-700">Shop with Confidence:</span>
-        <div class="inline-flex justify-center gap-y-2 gap-x-4 flex-wrap">
-          {% for type in shop.enabled_payment_types -%}
-            {{ type | payment_type_svg_tag: class: 'h-7 sm:h-10 w-auto' }}
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bg-pink-300">
-    <div class="container mx-auto pt-8 pb-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 text-white gap-y-12 gap-x-48 xl:gap-x-24">
-        <div class="order-1 sm:order-3 text-center">
-          <div>
-            <a href="#" class="text-lg font-bold">Let's Hang Out!</a>
-          </div>
-          <div class="mt-4">
-            <div class="inline-flex gap-x-4">
-              <a href="https://www.facebook.com/people/Plushiesca/100089355372931/" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
-                {% render 'icon-facebook' %}
-              </a>
-              <a href="https://www.instagram.com/plushies.ca/" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
-                {% render 'icon-instagram' %}
-              </a>
-              <a href="https://www.tiktok.com/@plushies.ca" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
-                {% render 'icon-tiktok' %}
-              </a>
+    <div class="bg-pink-200">
+        <div class="container mx-auto py-4">
+            <div class="flex flex-col gap-y-3 lg:flex-row items-center justify-center gap-x-4">
+                <span class="font-bold text-lg text-zinc-700">Shop with Confidence:</span>
+                <div class="inline-flex justify-center gap-y-2 gap-x-4 flex-wrap">
+                    {% for type in shop.enabled_payment_types -%}
+                        {{ type | payment_type_svg_tag: class: 'h-7 sm:h-10 w-auto' }}
+                    {% endfor %}
+                </div>
             </div>
-          </div>
         </div>
-        <div class="order-2 sm:order-1 text-center xl:text-left">
-          <div>
-            <a href="#" class="text-lg font-bold">Need Help?</a>
-          </div>
-          <div class="mt-4">
-            <a href="#" class="no-underline hover:underline">FAQ & Contact Us</a>
-          </div>
-          <div class="mt-1">
-            <a href="#" class="no-underline hover:underline">Shipping & Returns</a>
-          </div>
-          <div class="mt-1">
-            <a href="#" class="no-underline hover:underline">Order Tracking</a>
-          </div>
-        </div>
-        <div class="order-3 sm:order-2 text-center xl:text-left">
-          <div>
-            <a href="#" class="text-lg font-bold">Quick Links</a>
-          </div>
-          <div class="mt-4">
-            <a href="#" class="no-underline hover:underline">FAQ & Contact Us</a>
-          </div>
-          <div class="mt-1">
-            <a href="#" class="no-underline hover:underline">Shipping & Returns</a>
-          </div>
-          <div class="mt-1">
-            <a href="#" class="no-underline hover:underline">Order Tracking</a>
-          </div>
-        </div>
-        <div class="order-4 sm:order-4 text-center">
-          <div class="container">
-            <div>
-              <a class="text-lg font-bold">Be the First to Know</a>
-            </div>
-            <div class="mt-4">
-              {% form 'customer' %}
-                <p>Join our kawaii newsletter and get a FREE welcome gift!</p>
-                <input type="email" name="contact[email]" placeholder="Enter your email" class="mt-4 w-full py-2 px-2 rounded-md text-black" />
-                <input role="button" type="submit" class="mt-1 w-full bg-sky-500 text-white font-semibold py-2 rounded-md text-center hover:bg-sky-400 active:bg-sky-600" value="Subscribe" />
-              {% endform %}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="bg-pink-400">
-    <div class="container mx-auto py-4 sm:py-2">
-      <div class="flex flex-col gap-y-3 sm:flex-row justify-between items-center">
-        <div class="self-start order-last sm:self-auto sm:order-first text-xs text-white"><span class="font-semibold">Proudly powered by Shopify</span> - <span class="block sm:inline">&copy; Copyright {{ 'now' | date: "%Y" }} {{ 'plushies.ca' | link_to: routes.root_url }} - Sitemap</span></div>
-        <div id="footer" data-secure-action role="button" class="w-full order-first sm:w-fit sm:order-last text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
-      </div>
+    <div class="bg-pink-300">
+        <div class="container mx-auto pt-8 pb-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 text-white gap-y-12 gap-x-48 xl:gap-x-24">
+                <div class="order-1 sm:order-3 text-center">
+                    <div>
+                        <a href="#" class="text-lg font-bold">Let's Hang Out!</a>
+                    </div>
+                    <div class="mt-4">
+                        <div class="inline-flex gap-x-4">
+                            <a href="https://www.facebook.com/people/Plushiesca/100089355372931/" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
+                                {% render 'icon-facebook' %}
+                            </a>
+                            <a href="https://www.instagram.com/plushies.ca/" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
+                                {% render 'icon-instagram' %}
+                            </a>
+                            <a href="https://www.tiktok.com/@plushies.ca" class="h-10 w-10 bg-sky-500 rounded-full inline-flex items-center justify-center select-none hover:bg-sky-400 active:bg-sky-600">
+                                {% render 'icon-tiktok' %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-2 sm:order-1 text-center xl:text-left">
+                    <div>
+                        <span class="text-lg font-bold">Need Help?</span>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{ pages['faq'].url }}" class="no-underline hover:underline" title="FAQ">FAQ</a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ pages['contact'].url }}" class="no-underline hover:underline" title="Contact Us">Contact Us</a>
+                    </div>
+                </div>
+                <div class="order-3 sm:order-2 text-center xl:text-left">
+                    <div>
+                        <span class="text-lg font-bold">Quick Links</span>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{ shop.shipping_policy.url }}" class="no-underline hover:underline" title="Shipping">Shipping</a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ shop.refund_policy.url }}" class="no-underline hover:underline" title="Returns & Exchanges">Returns & Exchanges</a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ shop.privacy_policy.url }}" class="no-underline hover:underline" title="Privacy Policy">Privacy Policy</a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ shop.terms_of_service.url }}" class="no-underline hover:underline" title="Terms of Service">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="order-4 sm:order-4 text-center">
+                    <div class="container">
+                        <div>
+                            <a class="text-lg font-bold">Be the First to Know</a>
+                        </div>
+                        <div class="mt-4">
+                            {% form 'customer' %}
+                                <p>Stay cozy and in the loop with our plushie newsletter!</p>
+                                <input type="email" name="contact[email]" placeholder="Enter your email" class="mt-4 w-full py-2 px-2 rounded-md text-black" />
+                                <input role="button" type="submit" class="mt-1 w-full bg-sky-500 text-white font-semibold py-2 rounded-md text-center hover:bg-sky-400 active:bg-sky-600" value="Subscribe" />
+                            {% endform %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="bg-pink-400">
+        <div class="container mx-auto py-4 sm:py-2">
+            <div class="flex flex-col gap-y-3 sm:flex-row justify-between items-center">
+                <div class="self-start order-last sm:self-auto sm:order-first text-xs text-white"><span class="font-semibold">{{ powered_by_link | prepend: 'Proudly ' }}</span> - <span class="block sm:inline">&copy; Copyright {{ 'now' | date: "%Y" }} {{ 'plushies.ca' | link_to: routes.root_url }} - <a href="{{ shop.url | append: '/sitemap.xml' }}">Sitemap</a></span></div>
+                <div id="footer" data-secure-action role="button" class="w-full order-first sm:w-fit sm:order-last text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
+            </div>
+        </div>
+    </div>
 </footer>
 <div id="secure-popover" class="hidden bg-white rounded-md relative z-40" role="tooltip">
-  <div data-secure-close role="button" class="absolute top-4 right-4">
-    {% render 'icon-close', class: 'h-4 w-auto fill-black' %}
-  </div>
-  <div class="container mx-auto pt-6 pb-8">
-    <div class="text-center text-black">
-      <div class="flex items-center justify-center gap-x-2">{% render 'icon-success', class: 'h-8 w-auto fill-green-400', fill: '#428445' %} <span class="font-bold text-2xl">Site is Secure</span></div>
+    <div data-secure-close role="button" class="absolute top-4 right-4">
+        {% render 'icon-close', class: 'h-4 w-auto fill-black' %}
     </div>
-    <div class="mt-6">
-      <picture>
-        <img width="300" height="150" src="{{ 'ssl-secure-1.png' | asset_url }}" loading="lazy" />
-      </picture>
+    <div class="container mx-auto pt-6 pb-8">
+        <div class="text-center text-black">
+            <div class="flex items-center justify-center gap-x-2">{% render 'icon-success', class: 'h-8 w-auto fill-green-400', fill: '#428445' %} <span class="font-bold text-2xl">Site is Secure</span></div>
+        </div>
+        <div class="mt-6">
+            <picture>
+                <img width="300" height="150" src="{{ 'ssl-secure-1.png' | asset_url }}" loading="lazy" />
+            </picture>
+        </div>
+        <div class="mt-8 text-center">
+            <a href="https://www.ssllabs.com/ssltest/analyze.html?d=plushies.ca&latest" target="_blank" class="text-white font-semibold bg-green-500 py-2 px-3 rounded-md select-none hover:bg-green-400 active:bg-green-600">Verify Security</a>
+        </div>
     </div>
-    <div class="mt-8 text-center">
-      <a href="https://www.ssllabs.com/ssltest/analyze.html?d=plushies.ca&latest" target="_blank" class="text-white font-semibold bg-green-500 py-2 px-3 rounded-md select-none hover:bg-green-400 active:bg-green-600">Verify Security</a>
-    </div>
-  </div>
 </div>

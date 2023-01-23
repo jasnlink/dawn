@@ -1,46 +1,46 @@
 <header id="main-header">
-  <nav>
-    <div class="bg-auto bg-repeat" style="background-image: url('{{ "pattern-22.jpg" | asset_url }}')">
-      <div class="container mx-auto py-4">
-        <div class="flex justify-between items-center">
-          <div class="w-fit">
-            <a href="{{ shop.url }}">
-              <picture>
-                <source srcset="{{ 'logo.png' | asset_url }}" />
-                <img src="{{ 'logo.png' | asset_url }}" width="100" height="60" alt="logo" class="w-64 h-auto" loading="lazy" />
-              </picture>
-            </a>
-          </div>
-          <div role="button" data-cart-open class="relative bg-pink-300 px-3 sm:px-8 py-2 rounded-md text-white font-semibold select-none hover:bg-pink-300/80 active:bg-pink-400 d-flex items-center justify-center">
-            <span>{% render 'icon-cart', class: 'h-8 w-8 sm:h-6 sm:w-6 inline' %}</span>
-            <span class="hidden sm:inline">My bag</span>
-            <span class="hidden sm:inline"> - </span>
-            <span data-cart-count="full" class="hidden sm:inline">empty</span>
-            <div class="sm:hidden absolute top-0 right-0 -mt-1.5 -mr-1.5 h-6 w-6 rounded-full p-1 text-sm font-semibold text-center leading-none bg-sky-500 d-flex items-center justify-center">
-              <span data-cart-count="short">0</span>
+    <nav>
+        <div class="bg-auto bg-repeat" style="background-image: url('{{ "pattern-22.jpg" | asset_url }}')">
+            <div class="container mx-auto py-4">
+                <div class="flex justify-between items-center">
+                    <div class="w-fit">
+                        <a href="{{ shop.url }}">
+                            <picture>
+                                <source srcset="{{ 'logo.png' | asset_url }}" />
+                                <img src="{{ 'logo.png' | asset_url }}" width="100" height="60" alt="logo" class="w-64 h-auto" loading="lazy" />
+                            </picture>
+                        </a>
+                    </div>
+                    <div role="button" data-cart-open class="relative bg-pink-300 px-3 sm:px-8 py-2 rounded-md text-white font-semibold select-none hover:bg-pink-300/80 active:bg-pink-400 d-flex items-center justify-center">
+                        <span>{% render 'icon-cart', class: 'h-8 w-8 sm:h-6 sm:w-6 inline' %}</span>
+                        <span class="hidden sm:inline">My bag</span>
+                        <span class="hidden sm:inline"> - </span>
+                        <span data-cart-count="full" class="hidden sm:inline">empty</span>
+                        <div class="sm:hidden absolute top-0 right-0 -mt-1.5 -mr-1.5 h-6 w-6 rounded-full p-1 text-sm font-semibold text-center leading-none bg-sky-500 d-flex items-center justify-center">
+                            <span data-cart-count="short">0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="bg-pink-300">
-        <div class="container mx-auto py-2 text-center">
-          <span class="font-semibold text-white">Enjoy FREE Worldwide Shipping On Every Order.</span>
+        <div class="bg-pink-300">
+                <div class="container mx-auto py-2 text-center">
+                    <span class="font-semibold text-white">Enjoy FREE Worldwide Shipping On Every Order.</span>
+                </div>
         </div>
-    </div>
-  </nav>
+    </nav>
 </header>
 <div id="cart-banner-overlay" class="hidden fixed top-0 w-full z-20">
-  <div class="bg-pink-300">
-    <div class="container mx-auto text-center">
-      <div role="button" data-cart-open class="relative bg-pink-300 px-3 sm:px-8 py-2 rounded-md text-white font-semibold select-none hover:bg-pink-300/75 active:bg-pink-400 d-flex items-center justify-center">
-        <span>{% render 'icon-cart', class: 'h-8 w-8 sm:h-6 sm:w-6 inline' %}</span>
-        <span>My bag</span>
-        <span> - </span>
-        <span data-cart-count="full">empty</span>
-        <span> - Total: </span>
-        <span data-cart-total>$0.00 USD</span>
-      </div>
+    <div class="bg-pink-300">
+        <div class="container mx-auto text-center">
+            <div role="button" data-cart-open class="relative bg-pink-300 px-3 sm:px-8 py-2 rounded-md text-white font-semibold select-none hover:bg-pink-300/75 active:bg-pink-400 d-flex items-center justify-center">
+                <span>{% render 'icon-cart', class: 'h-8 w-8 sm:h-6 sm:w-6 inline' %}</span>
+                <span>My bag</span>
+                <span> - </span>
+                <span data-cart-count="full">empty</span>
+                <span> - Total: </span>
+                <span data-cart-total>$0.00 USD</span>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
