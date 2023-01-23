@@ -2,7 +2,13 @@
     <div>
         <a href="{{ product.url }}" class="block">
             <picture>
-                <img src="{{ product.featured_image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-t-md" />
+                <source srcset="{{ product.featured_image | image_url: width: 364, height: 364 }}" media="(min-width:1536px)" />
+                <source srcset="{{ product.featured_image | image_url: width: 300, height: 300 }}" media="(min-width:1280px)" />
+                <source srcset="{{ product.featured_image | image_url: width: 320, height: 320 }}" media="(min-width:1024px)" />
+                <source srcset="{{ product.featured_image | image_url: width: 356, height: 356 }}" media="(min-width:768px)" />
+                <source srcset="{{ product.featured_image | image_url: width: 292, height: 292 }}" media="(min-width:640px)" />
+                <source srcset="{{ product.featured_image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
+                <img src="{{ product.featured_image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-t-md" />
             </picture>
         </a>
     </div>

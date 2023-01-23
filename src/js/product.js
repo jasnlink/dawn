@@ -1,5 +1,5 @@
 import Glide from "@glidejs/glide";
-import { initAddCartAction } from "./main";
+import { initAddCartAction } from "./lib";
 
 window.addEventListener('DOMContentLoaded', (event) => {
     new Glide('.glide').mount();

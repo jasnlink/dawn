@@ -14,7 +14,8 @@ const config = {
   entry: {
     index: "./src/js/index.js",
     main: "./src/js/main.js",
-    product: "./src/js/product.js"
+    product: "./src/js/product.js",
+    lib: "./src/js/lib.js"
   },
   output: {
     filename: '[name].js',

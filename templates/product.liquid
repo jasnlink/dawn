@@ -7,7 +7,13 @@
                         {% for image in product.images %}
                             <li class="glide__slide">
                                 <picture>
-                                    <img src="{{ image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    <source srcset="{{ image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
+                                    <source srcset="{{ image | image_url: width: 580, height: 580 }}" media="(min-width:1280px)" />
+                                    <source srcset="{{ image | image_url: width: 476, height: 476 }}" media="(min-width:1024px)" />
+                                    <source srcset="{{ image | image_url: width: 724, height: 724 }}" media="(min-width:768px)" />
+                                    <source srcset="{{ image | image_url: width: 596, height: 596 }}" media="(min-width:640px)" />
+                                    <source srcset="{{ image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
+                                    <img src="{{ image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
                                 </picture>
                             </li>
                         {% endfor %}
@@ -17,7 +23,7 @@
                         {% for image in product.images %}
                             <div role="button" data-glide-dir="={{ forloop.index0 }}">
                                 <picture>
-                                    <img src="{{ image | image_url }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    <img src="{{ image | image_url: width: 120, height: 120, }}" height="120" width="120" loading="lazy" class="w-full h-auto object-cover rounded-md" />
                                 </picture>
                             </div>
                         {% endfor %}

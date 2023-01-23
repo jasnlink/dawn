@@ -13,7 +13,13 @@
                     <div>
                         <a href="{{ line_item.url }}" class="block aspect-square w-28 h-28 select-none">
                             <picture>
-                                <img src="{{ line_item.image | image_url }}" height="200" width="200" loading="lazy" class="h-full w-auto object-cover rounded-l-md" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:1536px)" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:1280px)" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:1024px)" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:768px)" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:640px)" />
+                                <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:0px)" />
+                                <img src="{{ line_item.image | image_url: width: 132, height: 132 }}" height="132" width="132" loading="lazy" class="h-full w-auto object-cover rounded-l-md" />
                             </picture>
                         </a>
                     </div>
@@ -55,7 +61,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div data-secure-action role="button" class="w-fit mt-4 mx-auto text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
+                <div id="cart" data-secure-action role="button" class="w-fit mt-4 mx-auto text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
             </div>
         </div>
     </div>

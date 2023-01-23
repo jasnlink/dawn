@@ -1,7 +1,6 @@
-import { initAddCartAction } from "./main";
+import { initAddCartAction } from "./lib";
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('index.js loaded...');
     initPagination();
 });
 
