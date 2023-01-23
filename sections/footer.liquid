@@ -16,7 +16,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 text-white gap-y-12 gap-x-48 xl:gap-x-24">
                 <div class="order-1 sm:order-3 text-center">
                     <div>
-                        <a href="#" class="text-lg font-bold">Let's Hang Out!</a>
+                        <a href="#" class="text-lg font-semibold tracking-wider">Let's Hang Out!</a>
                     </div>
                     <div class="mt-4">
                         <div class="inline-flex gap-x-4">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="order-2 sm:order-1 text-center xl:text-left">
                     <div>
-                        <span class="text-lg font-bold">Need Help?</span>
+                        <span class="text-lg font-semibold tracking-wider">Need Help?</span>
                     </div>
                     <div class="mt-4">
                         <a href="{{ pages['faq'].url }}" class="no-underline hover:underline" title="FAQ">FAQ</a>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="order-3 sm:order-2 text-center xl:text-left">
                     <div>
-                        <span class="text-lg font-bold">Quick Links</span>
+                        <span class="text-lg font-semibold tracking-wider">Quick Links</span>
                     </div>
                     <div class="mt-4">
                         <a href="{{ shop.shipping_policy.url }}" class="no-underline hover:underline" title="Shipping">Shipping</a>
@@ -63,13 +63,13 @@
                 <div class="order-4 sm:order-4 text-center">
                     <div class="container">
                         <div>
-                            <a class="text-lg font-bold">Be the First to Know</a>
+                            <a class="text-lg font-semibold tracking-wider">Be the First to Know</a>
                         </div>
                         <div class="mt-4">
                             {% form 'customer' %}
                                 <p>Stay cozy and in the loop with our plushie newsletter!</p>
                                 <input type="email" name="contact[email]" placeholder="Enter your email" class="mt-4 w-full py-2 px-2 rounded-md text-black" />
-                                <input role="button" type="submit" class="mt-1 w-full bg-sky-500 text-white font-semibold py-2 rounded-md text-center hover:bg-sky-400 active:bg-sky-600" value="Subscribe" />
+                                <input role="button" type="submit" class="mt-1 w-full bg-sky-500 text-white py-2 rounded-md text-center hover:bg-sky-400 active:bg-sky-600" value="Subscribe" />
                             {% endform %}
                         </div>
                     </div>
@@ -80,8 +80,8 @@
     <div class="bg-pink-400">
         <div class="container mx-auto py-4 sm:py-2">
             <div class="flex flex-col gap-y-3 sm:flex-row justify-between items-center">
-                <div class="self-start order-last sm:self-auto sm:order-first text-xs text-white"><span class="font-semibold">{{ powered_by_link | prepend: 'Proudly ' }}</span> - <span class="block sm:inline">&copy; Copyright {{ 'now' | date: "%Y" }} {{ 'plushies.ca' | link_to: routes.root_url }} - <a href="{{ shop.url | append: '/sitemap.xml' }}">Sitemap</a></span></div>
-                <div id="footer" data-secure-action role="button" class="w-full order-first sm:w-fit sm:order-last text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
+                <div class="self-start order-last sm:self-auto sm:order-first text-xs text-white"><span class="font-semibold tracking-wider">{{ powered_by_link | prepend: 'Proudly ' }}</span> - <span class="block sm:inline">&copy; Copyright {{ 'now' | date: "%Y" }} {{ 'plushies.ca' | link_to: routes.root_url }} - <a href="{{ shop.url | append: '/sitemap.xml' }}">Sitemap</a></span></div>
+                <div id="footer" data-secure-action role="button" class="w-full order-first sm:w-fit sm:order-last text-xs text-black font-semibold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
             </picture>
         </div>
         <div class="mt-8 text-center">
-            <a href="https://www.ssllabs.com/ssltest/analyze.html?d=plushies.ca&latest" target="_blank" class="text-white font-semibold bg-green-500 py-2 px-3 rounded-md select-none hover:bg-green-400 active:bg-green-600">Verify Security</a>
+            <a href="https://www.ssllabs.com/ssltest/analyze.html?d=plushies.ca&latest" target="_blank" class="text-white bg-green-500 py-2 px-3 rounded-md select-none hover:bg-green-400 active:bg-green-600">Verify Security</a>
         </div>
     </div>
 </div>

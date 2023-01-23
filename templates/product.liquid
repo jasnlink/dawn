@@ -41,7 +41,7 @@
                         {% endfor %}
                     </div>
                     <div class="text-4xl font-semibold mt-4">{{ product.title }}</div>
-                    <div class="mt-6 text-lg">{{ product.description }}</div>
+                    <div class="mt-6 text-lg">{{ product.description | replace: '<ul>', '<ul class="ml-4 list-disc">' }}</div>
                     <div class="mt-4">
                         <span>Availability:</span>
                         {% if product.available == true %}
@@ -51,12 +51,12 @@
                             {% assign product_availability_text = 'Out of stock' %}
                             {% assign product_availability_class = ' bg-red-500' %}
                         {% endif %}
-                        <span class="ml-2 rounded-md px-2 py-1 text-sm font-semibold text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
+                        <span class="ml-2 rounded-md px-2 py-1 text-sm text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
                     </div>
                     <div class="mt-4">
                         <span class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
                     </div>
-                    <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-8 w-full xl:w-1/2 bg-sky-500 text-lg text-white font-semibold py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
+                    <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-8 w-full xl:w-1/2 bg-sky-500 text-lg text-white py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
                         <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-7 w-7 text-white', fill: 'none' %}</span>
                         <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-7 w-7 text-white' %}</span>
                         <span data-add-state="default">Add to bag</span>

@@ -49,7 +49,7 @@
                     <div class="font-semibold">Shipping</div>
                     <div class="font-bold">FREE</div>
                 </div>
-                <a href="{{ routes.root_url }}{{ 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
+                <a href="{{ routes.root_url | append: 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white text-lg py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
             </div>
         </div>
         <div class="bg-pink-400">
