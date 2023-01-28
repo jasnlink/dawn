@@ -1,0 +1,58 @@
+<div data-recommended-content data-recommended-state="default" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=12&intent=related">
+    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+        <div class="glide-recommended relative">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    {% for product in recommendations.products %}
+                        <li class="glide__slide">
+                            <a href="{{ product.url }}" title="{{ product.title }}" class="block">
+                                <div>
+                                    <picture>
+                                        <source srcset="{{ product.featured_image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 580, height: 580 }}" media="(min-width:1280px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 476, height: 476 }}" media="(min-width:1024px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 724, height: 724 }}" media="(min-width:768px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 596, height: 596 }}" media="(min-width:640px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
+                                        <img src="{{ product.featured_image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    </picture>
+                                </div>
+                                <div class="px-1">
+                                    <div class="mt-2 min-h-[3.5rem]">
+                                        <span class="text-lg tracking-tight">{{ product.title }}</span>
+                                    </div>
+                                    <div class="mt-0.5">
+                                        <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            {% if product.variants.size > 1 %}
+                                <button type="button" class="mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75">See options</button>
+                            {% else %}
+                                <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
+                                    <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-6 w-6 text-white', fill: 'none' %}</span>
+                                    <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-6 w-6 text-white' %}</span>
+                                    <span data-add-state="default">Add to bag</span>
+                                </button>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="absolute top-1/2 -translate-y-1/2 -ml-6">
+                <div data-glide-el="controls">
+                    <div role="button" data-glide-dir="<" class="h-14 w-14 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">
+                        <div>{% render 'icon-prev', class: 'h-10 w-10 text-white fill-white' %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 -mr-6">
+                <div data-glide-el="controls">
+                    <div role="button" data-glide-dir=">" class="h-14 w-14 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">
+                        <div>{% render 'icon-next', class: 'h-10 w-10 text-white fill-white' %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+</div>
