@@ -56,10 +56,6 @@
         {% elsif template == 'collection' %}
             <script src="{{ 'index.js' | asset_url }}" defer="defer">
         {%- endif -%}
-        
-        {{ content_for_header }}
-    </head>
-    <body class="bg-orange-100">
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GXSE30D54"></script>
         <script>
@@ -69,6 +65,9 @@
     
             gtag('config', 'G-2GXSE30D54');
         </script>
+        {{ content_for_header }}
+    </head>
+    <body class="bg-orange-100">
         {% render 'fonts' %}
         {% section 'cart-drawer' %}
         {% section 'header' %}
