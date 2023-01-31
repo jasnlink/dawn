@@ -76,6 +76,9 @@
             id="main-content"
             role="main"
             tabindex="-1"
+            data-currency-iso-code="{{ currency.iso_code }}"
+            data-currency-name="{{ currency.name }}"
+            data-currency-symbol="{{ currency.symbol }}"
         >
             {% if request.path == '/policies/refund-policy' %}
                 {% section 'policy-refund' %}

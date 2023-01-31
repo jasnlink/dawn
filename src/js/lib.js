@@ -82,7 +82,8 @@ export function updateCartCount() {
     })
 
     function handleCartTotal(total) {
-        let text = '$'
+        let currencySymbol = document.querySelector('[data-currency-symbol]').dataset.currencySymbol
+        let text = currencySymbol
         if(total === 0) {
             text += total + '.00'
         } else if(total.toString().length === 2) {
@@ -92,7 +93,8 @@ export function updateCartCount() {
             let suffix = total.toString().slice(-2)
             text += prefix + '.' + suffix
         }
-        text += ' USD'
+        let currencyIsocode = document.querySelector('[data-currency-iso-code]').dataset.currencyIsoCode
+        text += ' '+currencyIsocode
         
         const cartTotalElementList = document.querySelectorAll('[data-cart-total]')
         cartTotalElementList.forEach((cartTotalElement) => {

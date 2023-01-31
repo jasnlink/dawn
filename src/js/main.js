@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 function initSecurePopover() {
 
     const secureBtnElementList = document.querySelectorAll('[data-secure-action]');
-    console.log('secureBtnElementList',secureBtnElementList)
     const secureCloseBtnElementList = document.querySelectorAll('[data-secure-close]');
     const securePopoverElement = document.getElementById('secure-popover');
 
@@ -32,13 +31,10 @@ function initSecurePopover() {
                 },
             ],
         });
-        //console.log('secureBtnElement',secureBtnElement)
-        //console.log('popperInstance',popperInstance)
         popperInstanceList.push(popperInstance)
     })
 
     function handleSecureToggle(secureBtnElement, index) {
-        console.log('click')
         securePopoverElement.classList.toggle('hidden');
         popperInstanceList[index].update();
     }
@@ -50,7 +46,6 @@ function initSecurePopover() {
 }
 
 function initCartDrawer() {
-    console.log('initCartDrawer')
     let drawerOpen = false;
     const backdropOpacity = 0.4;
 
