@@ -93,8 +93,7 @@ export function updateCartCount() {
             let suffix = total.toString().slice(-2)
             text += prefix + '.' + suffix
         }
-        let currencyIsocode = document.querySelector('[data-currency-iso-code]').dataset.currencyIsoCode
-        text += ' '+currencyIsocode
+        text += ' '+window.Shopify.currency.active
         
         const cartTotalElementList = document.querySelectorAll('[data-cart-total]')
         cartTotalElementList.forEach((cartTotalElement) => {
