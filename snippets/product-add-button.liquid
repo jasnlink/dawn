@@ -1,0 +1,9 @@
+{% if product.available == true %}
+    <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="{{ btn_class }}">
+        <span data-add-state="success" class="hidden">{% render 'icon-success', class: success_class, fill: 'none' %}</span>
+        <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: loading_class %}</span>
+        <span data-add-state="default">Add to bag</span>
+    </button>
+{% else %}
+    <div class="{{ out_of_stock_class }}">Out of stock</div>
+{% endif %}

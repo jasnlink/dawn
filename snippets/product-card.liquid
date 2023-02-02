@@ -1,4 +1,4 @@
-<div class="bg-white rounded-md">
+<div class="bg-white rounded-md flex flex-col">
     <div>
         <a href="{{ product.url }}" class="block">
             <picture>
@@ -12,25 +12,27 @@
             </picture>
         </a>
     </div>
-    <div class="container pt-3 pb-5">
-        <div class="min-h-[3.5rem]">
+    <div class="h-full container flex flex-col justify-between pt-3 pb-5">
+        <div>
             <a href="{{ product.url }}" class="block">
                 <span class="text-lg tracking-tight">{{ product.title }}</span>
             </a>
         </div>
-        <div class="mt-0.5">
-            <a href="{{ product.url }}" class="block">
-                <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
-            </a>
+        <div>
+            <div class="mt-0.5">
+                <a href="{{ product.url }}" class="block">
+                    <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
+                </a>
+            </div>
+            <div>
+                {% render 'product-add-button',
+                    product: product,
+                    btn_class: 'mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                    success_class: 'mx-auto h-6 w-6 text-white',
+                    loading_class: 'animate-spin mx-auto h-6 w-6 text-white',
+                    out_of_stock_class: 'mt-4 w-full text-white py-2 rounded-md text-center select-none opacity-75 bg-sky-800'
+                %}
+            </div>
         </div>
-        {% if product.variants.size > 1 %}
-            <button type="button" class="mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75">See options</button>
-        {% else %}
-            <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
-                <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-6 w-6 text-white', fill: 'none' %}</span>
-                <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-6 w-6 text-white' %}</span>
-                <span data-add-state="default">Add to bag</span>
-            </button>
-        {% endif %}
     </div>
 </div>
