@@ -67,7 +67,8 @@
             <script src="{{ 'index.js' | asset_url }}" defer="defer">
         {%- endif -%}
         {{ content_for_header }}
-    </head>
+    {% include 'alireviews_core' %} 
+ </head>
     <body class="bg-orange-100">
         {% render 'fonts' %}
         {% section 'cart-drawer' %}
