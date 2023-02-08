@@ -32,7 +32,6 @@ function initProductRecommended() {
             return res.text()
         })
         .then((data) => {
-            console.log(data)
             productRecommendationsSection.innerHTML = data
         })
         .catch((error) => {

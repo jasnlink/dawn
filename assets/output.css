@@ -1061,6 +1061,18 @@ html {
   width: 0.25rem;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
 .flex-shrink {
   flex-shrink: 1;
 }
@@ -1590,6 +1602,10 @@ html {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .gap-y-2 {
@@ -2276,6 +2292,11 @@ html {
   padding-right: 0.25rem;
 }
 
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
 .pr-3 {
   padding-right: 0.75rem;
 }
@@ -2330,6 +2351,14 @@ html {
 
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-9 {
+  padding-bottom: 2.25rem;
 }
 
 .text-left {
@@ -2416,6 +2445,11 @@ html {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .font-semibold {
@@ -2547,6 +2581,21 @@ html {
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgb(234 179 8 / var(--tw-text-opacity));
+}
+
+.text-yellow-400 {
+  --tw-text-opacity: 1;
+  color: rgb(250 204 21 / var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -3150,6 +3199,10 @@ html {
 
   .xl\:w-1\/2 {
     width: 50%;
+  }
+
+  .xl\:w-3\/4 {
+    width: 75%;
   }
 
   .xl\:grid-cols-4 {
