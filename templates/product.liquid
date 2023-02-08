@@ -41,7 +41,8 @@
                     {% endfor %}
                 </div>
                 <div class="text-4xl font-semibold mt-4">{{ product.title }}</div>
-                <div class="mt-6 text-lg">{{ product.description | replace: '<ul>', '<ul class="ml-4 list-disc">' }}</div>
+                <div product-id="{{ product.id }}" class="alr-display-review-badge mt-2"></div>
+                <div class="mt-4 text-lg">{{ product.description | replace: '<ul>', '<ul class="ml-4 list-disc">' }}</div>
                 <div class="mt-4">
                     <span>Availability:</span>
                     {% if product.available == true %}

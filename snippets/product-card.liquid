@@ -23,6 +23,7 @@
                 <a href="{{ product.url }}" class="block">
                     <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
                 </a>
+                <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
             </div>
             <div>
                 {% render 'product-add-button',
