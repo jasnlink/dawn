@@ -17,13 +17,14 @@
             <a href="{{ product.url }}" class="block">
                 <span class="text-lg tracking-tight 1">{{ product.title }}</span>
             </a>
+          <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
         </div>
         <div>
             <div class="mt-0.5">
                 <a href="{{ product.url }}" class="block">
                     <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
                 </a>
-                <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
+                
             </div>
             <div>
                 {% render 'product-add-button',
