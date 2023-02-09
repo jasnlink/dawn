@@ -41,7 +41,9 @@
                     {% endfor %}
                 </div>
                 <div class="text-4xl font-semibold mt-4">{{ product.title }}</div>
-                <div product-id="{{ product.id }}" class="alr-display-review-badge mt-2"></div>
+                <a href="#section-product-reviews" class="block">
+                    <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
+                </a>
                 <div class="mt-4 text-lg">{{ product.description | replace: '<ul>', '<ul class="ml-4 list-disc">' }}</div>
                 <div class="mt-4">
                     <span>Availability:</span>
@@ -67,8 +69,8 @@
             </div>
         </div>
     </div>
-    <div class="mt-12">
-        
+    <div class="mt-12" id="section-product-reviews">
+        {% section 'alireviews-widget-473839' %}  
     </div>
     <div class="mt-12">
         <div class="text-4xl font-bold text-center mb-8">

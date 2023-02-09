@@ -120,3 +120,35 @@ export function updateCartCount() {
     }
 
 }
+
+export function reloadScript(src) {
+    document.querySelector('script[src="'+src+'"]').remove();
+    let script = document.createElement('script');
+    script.setAttribute('src', src);
+    document.head.appendChild(script);
+}
+
+export function getScriptContent(src) {
+    return new Promise((resolve, reject) => {
+        fetch(src)
+        .then((response) => {
+            if(!response.ok) {
+                throw new Error
+            }
+            return response.text()
+        })
+        .then((data) => {
+            resolve(data)
+        })
+        .catch((err) => {
+            console.error(err)
+            reject()
+        })
+    })
+}
+
+export function appendScript(content) {
+    let script = document.createElement('script');
+    script.innerHTML = content
+    document.head.appendChild(script);
+}

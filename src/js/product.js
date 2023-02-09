@@ -1,5 +1,6 @@
 import Glide from "@glidejs/glide";
 import { initAddCartAction } from "./lib";
+import { reloadScript } from "./lib";
 
 window.addEventListener('DOMContentLoaded', (event) => {
     new Glide('.glide').mount();
@@ -40,6 +41,7 @@ function initProductRecommended() {
         .finally(() => {
             disableLoading();
             initAddCartAction();
+            reloadScript('https://cdn.alireviews.io/box/js/frontend/45/iframe.js?version=5.4.9')
             new Glide('.glide-recommended', {
                 type: 'carousel',
                 startAt: 0,
