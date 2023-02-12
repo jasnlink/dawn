@@ -1,0 +1,24 @@
+<div class="mt-16">
+    {% assign productShowcaseList = product.metafields.section.product_showcase_reference.value %}
+    {% for showcase in productShowcaseList %}
+        <div class="flex flex-col gap-12">
+            {% for media in showcase.media.value %}
+                {% assign forloop_modulo = forloop.index | modulo: 2 %}
+                <div class="w-full lg:w-2/3 mx-auto rounded-md bg-white">
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-0">
+                        <div class="col-span-1{% if forloop_modulo == 0%} order-2{% else %} order-1{% endif %}">
+                            <picture>
+                                <img src="{{ media | image_url: width: 400 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-t-md sm:rounded-t-none{% if forloop_modulo == 0%} sm:rounded-r-md{% else %} sm:rounded-l-md{% endif %}" />
+                            </picture>
+                        </div>
+                        <div class="col-span-2 flex justify-center items-center{% if forloop_modulo == 0%} order-1{% else %} order-2{% endif %}">
+                            <div class="container pt-20 pb-24 sm:py-8 mx-auto text-center">
+                                <div class="text-2xl sm:text-3xl font-bold">{{ showcase.subtitles.value[forloop.index0] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
