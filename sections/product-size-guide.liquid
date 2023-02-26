@@ -1,0 +1,17 @@
+{% assign productSizeGuide = product.metafields.section.size_guide.value %}
+{% if productSizeGuide != blank %}
+    <div class="mt-16 container mx-auto">
+        <div class="text-center text-4xl font-bold">Pick your size!</div>
+        <div class="mt-8 w-full lg:w-2/3 mx-auto">
+            <picture>
+                <source srcset="{{ image | image_url: width: 940 }}" media="(min-width:1536px)" />
+                <source srcset="{{ image | image_url: width: 768 }}" media="(min-width:1280px)" />
+                <source srcset="{{ image | image_url: width: 600 }}" media="(min-width:1024px)" />
+                <source srcset="{{ image | image_url: width: 640 }}" media="(min-width:768px)" />
+                <source srcset="{{ image | image_url: width: 512 }}" media="(min-width:640px)" />
+                <source srcset="{{ image | image_url: width: 576 }}" media="(min-width:0px)" />
+                <img src="{{ productSizeGuide | image_url: width: 576 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover" />
+            </picture>
+        </div>
+    </div>
+{% endif %}

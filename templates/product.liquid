@@ -46,6 +46,9 @@
                 </a>
                 <div class="mt-4 text-lg">{{ product.description | replace: '<ul>', '<ul class="ml-4 list-disc">' }}</div>
                 <div class="mt-4">
+                    {% render 'product.section.variant-selector' %}
+                </div>
+                <div class="mt-4">
                     <span>Availability:</span>
                     {% if product.available == true %}
                         {% assign product_availability_text = 'In stock' %}
@@ -57,7 +60,7 @@
                     <span class="ml-2 rounded-md px-2 py-1 text-sm text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
                 </div>
                 <div class="mt-4">
-                    <span class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
+                    <span data-product-display-price class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
                 </div>
                 {% render 'product-add-button',
                     product: product,
@@ -69,6 +72,7 @@
             </div>
         </div>
     </div>
+    {% section 'product-size-guide' %}
     {% section 'product-showcase' %}
     {% section 'product-badge-list' %}
     <div class="mt-12" id="section-product-reviews">

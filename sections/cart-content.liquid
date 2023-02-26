@@ -11,7 +11,7 @@
             {% for line_item in cart.items %}
                 <div class="flex items-center bg-pink-100 rounded-md gap-x-4">
                     <div>
-                        <a href="{{ line_item.url }}" class="block aspect-square w-28 h-28 select-none">
+                        <a href="{{ line_item.url }}" class="block aspect-square w-32 h-32 select-none">
                             <picture>
                                 <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:1536px)" />
                                 <source srcset="{{ line_item.image | image_url: width: 132, height: 132 }}" media="(min-width:1280px)" />
@@ -23,9 +23,12 @@
                             </picture>
                         </a>
                     </div>
-                    <div>
-                        <div class="flex flex-col justify-center items-start py-2 pr-3">
+                    <div class="h-full">
+                        <div class="flex flex-col justify-start items-start py-1 pr-3">
                             <a href="{{ line_item.url }}" class="xl:text-lg">{{ line_item.title | truncate: 25 }}</a>
+                            {% unless line_item.product.has_only_default_variant %}
+                                <span class="text-sm">{{ line_item.variant.title }}</span>
+                            {% endunless %}
                             <span class="font-semibold mt-1 sm:mt-0 xl:text-lg">{{ line_item.final_price | money_with_currency }}</span>
                             <div class="mt-1.5 flex justify-center items-center gap-2 border border-gray-500 rounded-md">
                                 <div role="button" data-cart-action="minus" data-cart-item-id="{{ forloop.index }}" data-cart-item-quantity="{{ line_item.quantity }}" class="py-1 px-2">{% render 'icon-minus', class: 'h-3 w-3 text-gray-700' %}</div>

@@ -1,0 +1,28 @@
+{% unless product.has_only_default_variant %}
+    <div class="hidden">
+        {% for variant in product.variants %}
+            {% if variant.available == true %}
+                {% capture data_variant_options %}
+                    {% for option in variant.options %}
+                        {% capture data_option %}{% if forloop.first %} {% endif %}{{ 'data-selector-variant-option-' | append: forloop.index | append: '="' | append: option | append: '"' }}{% unless forloop.last %} {% endunless %}{% endcapture %}
+                        {% assign data_option = data_option | downcase | replace: ' ', '_' %}
+                        {{ data_option }}
+                    {% endfor %}
+                {% endcapture %}
+                <div data-selector-variant-id="{{ variant.id }}" data-selector-variant-price="{{ variant.price | money_with_currency }}"{{ data_variant_options }}></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div>
+        {% for product_option in product.options_with_values %}
+            <div data-selector-option-group-index="{{ forloop.index }}">
+                <label class="font-bold">{{ product_option.name }}</label>
+                <select data-selector-element-type="dropdown" class="ml-2">
+                    {% for product_option_value in product_option.values %}
+                        <option value="{{ product_option_value }}"{% if product_option.selected_value == product_option_value %} data-selector-default{% endif %} data-selector-option-index="{{ forloop.index0 }}" data-selector-action="{{ product_option.position }}" data-selector-option-value="{{ product_option_value | downcase | replace: ' ', '_' }}">{{ product_option_value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+    </div>
+{% endunless %}
