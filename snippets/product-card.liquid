@@ -22,6 +22,9 @@
             <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
             <div class="mt-1">
                 <a href="{{ product.url }}" class="block">
+                    {% unless product.has_only_default_variant %}
+                        <span class="text-sm mr-1">From </span>
+                    {% endunless %}
                     <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
                 </a>
             </div>

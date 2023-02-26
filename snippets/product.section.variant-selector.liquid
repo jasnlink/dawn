@@ -17,7 +17,7 @@
         {% for product_option in product.options_with_values %}
             <div data-selector-option-group-index="{{ forloop.index }}">
                 <label class="font-bold">{{ product_option.name }}</label>
-                <select data-selector-element-type="dropdown" class="ml-2">
+                <select data-selector-element-type="dropdown" class="ml-2 rounded-md">
                     {% for product_option_value in product_option.values %}
                         <option value="{{ product_option_value }}"{% if product_option.selected_value == product_option_value %} data-selector-default{% endif %} data-selector-option-index="{{ forloop.index0 }}" data-selector-action="{{ product_option.position }}" data-selector-option-value="{{ product_option_value | downcase | replace: ' ', '_' }}">{{ product_option_value }}</option>
                     {% endfor %}
