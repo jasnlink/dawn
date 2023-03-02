@@ -9,7 +9,11 @@ export function initAddCartAction() {
     function handleAddCart(event) {
 
         const targetElement = event.currentTarget
+
         const productId = parseInt(targetElement.dataset.addCart);
+
+        pushGtagAddCartEvent(productId)
+
         enableBtnLoading(targetElement);
 
         let formData = {
@@ -56,6 +60,27 @@ export function initAddCartAction() {
                 element.querySelector('[data-add-state="default"]').classList.remove('hidden')
                 element.disabled = false
             }, 500);
+        }
+
+        function pushGtagAddCartEvent(pushId) {
+
+            const itemInfoElement = document.querySelector('[data-info-variant-id="'+ pushId +'"]')
+            gtag("event", "add_to_cart", {
+                currency: itemInfoElement.getAttribute('data-info-currency'),
+                value: itemInfoElement.getAttribute('data-info-variant-price'),
+                items: [
+                    {
+                        item_id: itemInfoElement.getAttribute('data-info-product-id'),
+                        item_name: itemInfoElement.getAttribute('data-info-product-title'),
+                        item_brand: itemInfoElement.getAttribute('data-info-product-vendor'),
+                        item_category: itemInfoElement.getAttribute('data-info-product-collection'),
+                        item_variant: itemInfoElement.getAttribute('data-info-variant-id'),
+                        price: itemInfoElement.getAttribute('data-info-variant-price'),
+                        quantity: 1
+                    }
+                ]
+            });
+        
         }
 
     }
