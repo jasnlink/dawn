@@ -12,17 +12,16 @@ export function initAddCartAction() {
 
         const productId = parseInt(targetElement.dataset.addCart);
 
-        pushGtagAddCartEvent(productId)
-
-        enableBtnLoading(targetElement);
+        
+        enableLoading(targetElement);
 
         let formData = {
             'items': [{
-                    'id': productId,
+                'id': productId,
                     'quantity': 1
                 }]
         };
-
+        
         fetch(window.Shopify.routes.root + 'cart/add.js', {
             method: 'POST',
             headers: {
@@ -32,34 +31,45 @@ export function initAddCartAction() {
         })
         .then((res) => {
             if(!res.ok) {
-                throw new Error();
+                throw new Error;
             }
             return res.json()
         })
         .then((data) => {
             updateCartCount()
+            pushGtagAddCartEvent(productId)
+            disableLoading(targetElement);
         })
         .catch((error) => {
+            pushGtagAddErrorEvent(productId)
+            disableLoading(targetElement, true);
             console.error(error)
         })
-        .finally(() => {
-            disableBtnLoading(targetElement);
-        })
 
-        function enableBtnLoading(element) {
+        function enableLoading(element) {
             element.querySelector('[data-add-state="default"]').classList.add('hidden')
             element.querySelector('[data-add-state="loading"]').classList.remove('hidden')
             element.disabled = true
         }
     
-        function disableBtnLoading(element) {
+        function disableLoading(element, error=false) {
             element.querySelector('[data-add-state="loading"]').classList.add('hidden')
-            element.querySelector('[data-add-state="success"]').classList.remove('hidden')
-            setTimeout(() => {
-                element.querySelector('[data-add-state="success"]').classList.add('hidden')
-                element.querySelector('[data-add-state="default"]').classList.remove('hidden')
-                element.disabled = false
-            }, 500);
+            if(error) {
+                element.querySelector('[data-add-state="error"]').classList.remove('hidden')
+                setTimeout(() => {
+                    element.querySelector('[data-add-state="error"]').classList.add('hidden')
+                    element.querySelector('[data-add-state="default"]').classList.remove('hidden')
+                    element.disabled = false
+                }, 500);
+            } else {
+                element.querySelector('[data-add-state="success"]').classList.remove('hidden')
+                setTimeout(() => {
+                    element.querySelector('[data-add-state="success"]').classList.add('hidden')
+                    element.querySelector('[data-add-state="default"]').classList.remove('hidden')
+                    element.disabled = false
+                }, 500);
+            }
+
         }
 
         function pushGtagAddCartEvent(pushId) {
@@ -68,6 +78,27 @@ export function initAddCartAction() {
             gtag("event", "add_to_cart", {
                 currency: itemInfoElement.getAttribute('data-info-currency'),
                 value: itemInfoElement.getAttribute('data-info-variant-price'),
+                items: [
+                    {
+                        item_id: itemInfoElement.getAttribute('data-info-product-id'),
+                        item_name: itemInfoElement.getAttribute('data-info-product-title'),
+                        item_brand: itemInfoElement.getAttribute('data-info-product-vendor'),
+                        item_category: itemInfoElement.getAttribute('data-info-product-collection'),
+                        item_variant: itemInfoElement.getAttribute('data-info-variant-id'),
+                        price: itemInfoElement.getAttribute('data-info-variant-price'),
+                        quantity: 1
+                    }
+                ]
+            });
+        
+        }
+
+        function pushGtagAddErrorEvent(pushId) {
+
+            const itemInfoElement = document.querySelector('[data-info-variant-id="'+ pushId +'"]')
+            gtag("event", "error_add_cart", {
+                currency: itemInfoElement.getAttribute('data-info-currency'),
+                value: 0,
                 items: [
                     {
                         item_id: itemInfoElement.getAttribute('data-info-product-id'),

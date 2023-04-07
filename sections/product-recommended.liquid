@@ -30,13 +30,20 @@
                             {% if product.variants.size > 1 %}
                                 <button type="button" class="mt-4 bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75">See options</button>
                             {% else %}
-                                <button type="button" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800">
-                                    <span data-add-state="success" class="hidden">{% render 'icon-success', class: 'mx-auto h-6 w-6 text-white', fill: 'none' %}</span>
-                                    <span data-add-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-6 w-6 text-white' %}</span>
-                                    <span data-add-state="default">Add to bag</span>
-                                </button>
+                                {% render 'product-add-button',
+                                    product: product,
+                                    type: 'product-card',
+                                    btn_class: 'mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                                    error_class: 'mx-auto h-6 w-6 text-white',
+                                    success_class: 'mx-auto h-6 w-6 text-white',
+                                    loading_class: 'animate-spin mx-auto h-6 w-6 text-white',
+                                    out_of_stock_class: 'mt-4 w-full text-white py-2 rounded-md text-center select-none opacity-75 bg-sky-800'
+                                %}
                             {% endif %}
                         </li>
+                        {% render 'product.section.info',
+                            product: product
+                        %}
                     {% endfor %}
                 </ul>
             </div>
