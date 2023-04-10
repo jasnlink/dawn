@@ -1,4 +1,4 @@
-<div data-recommended-content data-recommended-state="default" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=12&intent=related">
+<div data-recommended-content>
     {%- if recommendations.performed? and recommendations.products_count > 0 -%}
         <div class="glide-recommended relative">
             <div class="glide__track" data-glide-el="track">
@@ -6,6 +6,9 @@
                     {% for product in recommendations.products %}
                         <li class="glide__slide">
                             <a href="{{ product.url }}" title="{{ product.title }}" class="block">
+                                {% render 'product.section.info',
+                                    product: product
+                                %}
                                 <div>
                                     <picture>
                                         <source srcset="{{ product.featured_image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
@@ -23,7 +26,23 @@
                                     </div>
                                     <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
                                     <div class="mt-0.5">
-                                        <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
+                                        {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                                            <div class="line-through decoration-from-font text-gray-400">
+                                                {% unless product.has_only_default_variant %}
+                                                    <span class="text-xs mr-1">From </span>
+                                                {% endunless %}
+                                                <span class="font-semibold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                                            </div>
+                                        {% endif %}
+                                        <div class="flex items-center">
+                                            {% unless product.has_only_default_variant %}
+                                                <span class="mr-1">From </span>
+                                            {% endunless %}
+                                            <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
+                                            {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                                                <span class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs">Save {{ product.price | minus: product.compare_at_price | money_with_currency }}</span>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </a>
@@ -41,9 +60,6 @@
                                 %}
                             {% endif %}
                         </li>
-                        {% render 'product.section.info',
-                            product: product
-                        %}
                     {% endfor %}
                 </ul>
             </div>

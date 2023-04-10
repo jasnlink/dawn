@@ -60,7 +60,17 @@
                     <span class="ml-2 rounded-md px-2 py-1 text-sm text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
                 </div>
                 <div class="mt-4">
-                    <span data-product-display-price class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
+                    {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                        <div class="line-through decoration-from-font text-gray-400">
+                            <span data-product-compare-price class="font-semibold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="flex items-center">
+                        <span data-product-display-price class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
+                        {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                            <span data-product-display-compare-save-price class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs"><span>Save</span> <span data-product-compare-save-price>{{ product.price | minus: product.compare_at_price | money_with_currency }}</span></span>
+                        {% endif %}
+                    </div>
                 </div>
                 {% render 'product-add-button',
                     product: product,
@@ -83,7 +93,7 @@
         <div class="text-4xl font-bold text-center mb-8">
             <span>You may also like</span>
         </div>
-        {% section 'product-recommended' %}
+        <div data-recommended-state="default" data-url="{{ routes.product_recommendations_url }}?section_id={{ 'product-recommended' }}&product_id={{ product.id }}&limit=12&intent=related"></div>
         <div data-recommended-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-16 w-16 text-sky-500' %}</div>
     </div>
 </div>

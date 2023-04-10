@@ -45,7 +45,6 @@ function initVariantSelector() {
         if(selectionState[targetOptionIndex]['value']) {
             document.querySelectorAll('[data-selector-option-group-index="'+targetOptionIndex+'"] [data-selector-option-value="'+selectionState[targetOptionIndex]['value']+'"]')
             .forEach((optionElement) => {
-                console.log('optionElement', optionElement)
                 optionElement.classList.remove('bg-black')
                 optionElement.classList.remove('text-white')
                 optionElement.classList.add('bg-white')
@@ -79,9 +78,28 @@ function initVariantSelector() {
                 element.disabled = false
             })
             document.querySelectorAll('[data-product-display-price]').forEach(element => {
-                element.dataset.productDisplayPrice = foundElement.dataset.selectorVariantPrice
                 element.textContent = foundElement.dataset.selectorVariantPrice
             })
+            if(foundElement.dataset.selectorVariantComparePrice) {
+                document.querySelectorAll('[data-product-display-compare-save-price]').forEach(element => {
+                    element.classList.remove('hidden')
+                })
+                document.querySelectorAll('[data-product-compare-price]').forEach(element => {
+                    element.classList.remove('hidden')
+                    element.textContent = foundElement.dataset.selectorVariantComparePrice
+                })
+                document.querySelectorAll('[data-product-compare-save-price]').forEach(element => {
+                    element.classList.remove('hidden')
+                    element.textContent = foundElement.dataset.selectorVariantCompareSavePrice
+                })
+            } else {
+                document.querySelectorAll('[data-product-compare-price]').forEach(element => {
+                    element.classList.add('hidden')
+                })
+                document.querySelectorAll('[data-product-display-compare-save-price]').forEach(element => {
+                    element.classList.add('hidden')
+                })
+            }
         } else {
             document.querySelectorAll('[data-add-cart]').forEach(element => {
                 element.dataset.addCart = null
@@ -94,7 +112,7 @@ function initVariantSelector() {
 
 function initProductRecommended() {
 
-    const productRecommendationsSection = document.querySelector('[data-recommended-content]');
+    const productRecommendationsSection = document.querySelector('[data-recommended-state="default"]');
     const observer = new IntersectionObserver(handleIntersection, {rootMargin: '0px 0px 200px 0px'});
 
     observer.observe(productRecommendationsSection);
@@ -109,10 +127,14 @@ function initProductRecommended() {
 
         const url = productRecommendationsSection.dataset.url;
 
+        console.log('url',url)
+
         fetch(url)
         .then((res) => {
+            console.log('res', res)
             if(!res.ok) {
-                throw new Error();
+                console.log('error')
+                throw new Error;
             }
             return res.text()
         })

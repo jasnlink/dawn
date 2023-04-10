@@ -14,6 +14,7 @@ export function initAddCartAction() {
 
         
         enableLoading(targetElement);
+        initAnimation(targetElement)
 
         let formData = {
             'items': [{
@@ -39,12 +40,60 @@ export function initAddCartAction() {
             updateCartCount()
             pushGtagAddCartEvent(productId)
             disableLoading(targetElement);
+            playAnimation();
         })
         .catch((error) => {
             pushGtagAddErrorEvent(productId)
             disableLoading(targetElement, true);
             console.error(error)
         })
+
+        function initAnimation(targetElement) {
+
+            const animationObjectElement = document.querySelector('[data-animation-object="cart"]')
+            const animationSourceElement = targetElement
+
+            let animationSourceElementRect = animationSourceElement.getBoundingClientRect()
+
+            let animationObjectRect = animationObjectElement.getBoundingClientRect()
+
+            let animationObjectSourceX = animationSourceElementRect.x + (animationSourceElementRect.width/2) - (animationObjectRect.width/2)
+            let animationObjectSourceY = animationSourceElementRect.y - (animationObjectRect.height/2)
+
+            animationObjectElement.style.setProperty('left', `${animationObjectSourceX}px`)
+            animationObjectElement.style.setProperty('top', `${animationObjectSourceY}px`)
+            animationObjectElement.style.setProperty('transition', `all .45s cubic-bezier(.55,.05,.92,.54) 0s`)
+
+        }
+
+        function playAnimation() {
+
+            const animationObjectElement = document.querySelector('[data-animation-object="cart"]')
+            let animationTargetElement
+            if(document.querySelector('[data-animation-target="overlay"]').classList.contains('hidden')) {
+                animationTargetElement = document.querySelector('[data-animation-target="cart"]')
+            } else {
+                animationTargetElement = document.querySelector('[data-animation-target="overlay"]')
+            }
+            
+            animationObjectElement.classList.remove('hidden')
+    
+            let animationObjectRect = animationObjectElement.getBoundingClientRect()
+            let animationTargetElementRect = animationTargetElement.getBoundingClientRect()
+    
+            let animationObjectTargetX = animationTargetElementRect.x + (animationTargetElementRect.width/2) - (animationObjectRect.width/2)
+            let animationObjectTargetY = animationTargetElementRect.y + (animationTargetElementRect.height/2) - (animationObjectRect.height/2)
+
+            setTimeout(() => {
+                animationObjectElement.style.setProperty('left', `${animationObjectTargetX}px`)
+                animationObjectElement.style.setProperty('top', `${animationObjectTargetY}px`)
+            }, 20);
+
+            animationObjectElement.addEventListener('transitionend', () => {
+                animationObjectElement.style.setProperty('transition', ``)
+                animationObjectElement.classList.add('hidden')
+            }, {once:true})
+        }
 
         function enableLoading(element) {
             element.querySelector('[data-add-state="default"]').classList.add('hidden')
