@@ -25,11 +25,11 @@
                     </div>
                     <div class="h-full">
                         <div class="flex flex-col justify-start items-start py-1 pr-3">
-                            <a href="{{ line_item.url }}" class="xl:text-lg">{{ line_item.title | truncate: 25 }}</a>
+                            <a href="{{ line_item.url }}" class="xl:text-lg font-medium">{{ line_item.title | truncate: 25 }}</a>
                             {% unless line_item.product.has_only_default_variant %}
                                 <span class="text-sm">{{ line_item.variant.title }}</span>
                             {% endunless %}
-                            <span class="font-semibold mt-1 sm:mt-0 xl:text-lg">{{ line_item.final_price | money_with_currency }}</span>
+                            <span class="font-bold mt-1 sm:mt-0 xl:text-lg">{{ line_item.final_price | money_with_currency }}</span>
                             <div class="mt-1.5 flex justify-center items-center gap-2 border border-gray-500 rounded-md">
                                 <div role="button" data-cart-action="minus" data-cart-item-id="{{ forloop.index }}" data-cart-item-quantity="{{ line_item.quantity }}" class="py-1 px-2">{% render 'icon-minus', class: 'h-3 w-3 text-gray-700' %}</div>
                                 <div class="select-none text-gray-900">{{ line_item.quantity }}</div>
@@ -45,14 +45,14 @@
         <div class="pt-6 pb-7">
             <div class="container mx-auto px-8 xl:px-24 text-black">
                 <div class="flex justify-between">
-                    <div class="font-semibold">Subtotal</div>
+                    <div class="font-medium">Subtotal</div>
                     <div class="font-bold">{{ cart.items_subtotal_price | money_with_currency }}</div>
                 </div>
                 <div class="mt-2 flex justify-between">
-                    <div class="font-semibold">Shipping</div>
+                    <div class="font-medium">Shipping</div>
                     <div class="font-bold">FREE</div>
                 </div>
-                <a href="{{ routes.root_url | append: 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white text-lg py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
+                <a href="{{ routes.root_url | append: 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white font-semibold text-lg py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
             </div>
         </div>
         <div class="bg-pink-400">

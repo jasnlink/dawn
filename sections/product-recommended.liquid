@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="px-1">
                                     <div class="mt-2 min-h-[3.5rem]">
-                                        <span class="text-lg tracking-tight 2">{{ product.title }}</span>
+                                        <span class="text-lg tracking-tight font-semibold">{{ product.title }}</span>
                                     </div>
                                     <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
                                     <div class="mt-0.5">
@@ -31,16 +31,16 @@
                                                 {% unless product.has_only_default_variant %}
                                                     <span class="text-xs mr-1">From </span>
                                                 {% endunless %}
-                                                <span class="font-semibold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                                                <span class="font-bold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
                                             </div>
                                         {% endif %}
                                         <div class="flex items-center">
                                             {% unless product.has_only_default_variant %}
                                                 <span class="mr-1">From </span>
                                             {% endunless %}
-                                            <span class="font-semibold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
+                                            <span class="font-bold text-lg tracking-wide">{{ product.price | money_with_currency }}</span>
                                             {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
-                                                <span class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs">Save {{ product.price | minus: product.compare_at_price | money_with_currency }}</span>
+                                                <span class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md font-semibold text-xs">Save {{ product.price | minus: product.compare_at_price | money_with_currency }}</span>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                 {% render 'product-add-button',
                                     product: product,
                                     type: 'product-card',
-                                    btn_class: 'mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                                    btn_class: 'mt-4 w-full bg-sky-500 text-white font-semibold py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
                                     error_class: 'mx-auto h-6 w-6 text-white',
                                     success_class: 'mx-auto h-6 w-6 text-white',
                                     loading_class: 'animate-spin mx-auto h-6 w-6 text-white',

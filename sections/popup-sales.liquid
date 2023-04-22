@@ -1,0 +1,21 @@
+<div data-sales-popup-element class="fixed bottom-4 left-4 sm:left-12 z-30 w-64 sm:w-96 transition-transform ease-in-out duration-150 translate-y-[200%]">
+    <div data-sales-close role="button" class="absolute top-2 right-2">
+        {% render 'icon-close', class: 'h-3 w-auto fill-black text-black' %}
+    </div>
+    <div class="bg-pink-50 border border-solid border-black rounded-lg py-5 px-5">
+        <a data-sales-url href="#" title="" class="flex gap-2">
+            <div class="h-12 w-12 sm:h-24 sm:w-24">
+                <img data-sales-media src="https://placehold.co/300x300" title="title" alt="alt" class="w-full h-full object-center object-contain rounded-md">
+            </div>
+            <div class="text-xs sm:text-base">
+                <div class="h-full flex flex-col justify-between">
+                    <div>
+                        <div>Someone from <span class="font-semibold" data-sales-location></span> recently bought</div>
+                        <div class="font-bold" data-sales-title>Product title</div>
+                    </div>
+                    <div data-sales-time>3 mins ago</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

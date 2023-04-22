@@ -1,6 +1,6 @@
 <div class="bg-white rounded-md flex flex-col">
     <div>
-        <a href="{{ product.url }}" class="block">
+        <a href="{{ product.url }}" class="block relative">
             <picture>
                 <source srcset="{{ product.featured_image | image_url: width: 364, height: 364 }}" media="(min-width:1536px)" />
                 <source srcset="{{ product.featured_image | image_url: width: 300, height: 300 }}" media="(min-width:1280px)" />
@@ -10,12 +10,20 @@
                 <source srcset="{{ product.featured_image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
                 <img src="{{ product.featured_image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-t-md" />
             </picture>
+            {% assign current_timestamp = 'now' | date: '%s' %}
+            {% assign product_created_timestamp = product.created_at | date: '%s' %}
+            {% assign time_elapsed_created = current_timestamp | minus: product_created_timestamp %}
+            {% if time_elapsed_created <= 2592000 %}
+                <div class="absolute top-4 right-4">
+                    <div class="bg-pink-300 text-white font-semibold text-sm rounded-lg px-4 py-1">New</div>
+                </div>
+            {% endif %}
         </a>
     </div>
     <div class="h-full container flex flex-col justify-between pt-3 pb-5">
         <div>
             <a href="{{ product.url }}" class="block">
-                <span class="text-lg tracking-tight 1">{{ product.title }}</span>
+                <span class="text-lg tracking-tight 1 font-semibold">{{ product.title }}</span>
             </a>
         </div>
         <div>
@@ -27,16 +35,16 @@
                             {% unless product.has_only_default_variant %}
                                 <span class="text-xs mr-1">From </span>
                             {% endunless %}
-                            <span class="font-semibold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                            <span class="font-bold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
                         </div>
                     {% endif %}
                     <div class="flex items-center">
                         {% unless product.has_only_default_variant %}
                             <span class="mr-1">From </span>
                         {% endunless %}
-                        <span class="font-semibold text-xl tracking-wide">{{ product.price | money_with_currency }}</span>
+                        <span class="font-bold text-xl tracking-wide">{{ product.price | money_with_currency }}</span>
                         {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
-                            <span class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs">Save {{ product.price | minus: product.compare_at_price | money_with_currency }}</span>
+                            <span class="ml-2 font-semibold leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs">Save {{ product.price | minus: product.compare_at_price | money_with_currency }}</span>
                         {% endif %}
                     </div>
                 </a>
@@ -45,7 +53,7 @@
                 {% render 'product-add-button',
                     product: product,
                     type: 'product-card',
-                    btn_class: 'mt-4 w-full bg-sky-500 text-white py-2 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                    btn_class: 'mt-4 w-full bg-sky-500 text-white py-2 font-semibold rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
                     error_class: 'mx-auto h-6 w-6 text-white',
                     success_class: 'mx-auto h-6 w-6 text-white',
                     loading_class: 'animate-spin mx-auto h-6 w-6 text-white',

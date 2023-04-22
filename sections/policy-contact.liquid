@@ -39,24 +39,24 @@
                 {{ form.errors | default_errors }}
                 <div class="flex gap-4 w-full">
                     <div class="mt-4 w-full">
-                        <label for="first-name">First name</label>
+                        <label class="font-semibold" for="first-name">First name</label>
                         <input type="text" name="contact[first_name]" id="first-name" class="mt-2 w-full py-2 px-2 rounded-md text-black" placeholder="First name" />
                     </div>
                     <div class="mt-4 w-full">
-                        <label for="last-name">Last name</label>
+                        <label class="font-semibold" for="last-name">Last name</label>
                         <input type="text" name="contact[last_name]" id="last-name" class="mt-2 w-full py-2 px-2 rounded-md text-black" placeholder="Last name" />
                     </div>
                 </div>
                 <div class="mt-4">
-                    <label for="phone">Phone number</label>
+                    <label class="font-semibold" for="phone">Phone number</label>
                     <input type="tel" name="contact[phone]" id="phone" class="mt-2 w-full py-2 px-2 rounded-md text-black" placeholder="+1(123)456-7890" />
                 </div>
                 <div class="mt-4">
-                    <label for="email">Email</label>
+                    <label class="font-semibold" for="email">Email</label>
                     <input type="email" name="contact[email]" id="email" class="mt-2 w-full py-2 px-2 rounded-md text-black" placeholder="you@example.com" />
                 </div>
                 <div class="mt-4">
-                    <label for="message">Message</label>
+                    <label class="font-semibold" for="message">Message</label>
                     <textarea name="contact[body]" id="message" class="mt-2 w-full py-2 px-2 rounded-md text-black"></textarea>
                 </div>
                 <div class="submit">

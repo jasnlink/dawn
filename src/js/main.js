@@ -1,189 +1,32 @@
-import { initAddCartAction } from "./lib";
 import { updateCartCount } from "./lib";
+import { handleCartToggle } from "./lib";
+import { initSecurePopover } from "./lib";
 
 window.addEventListener('DOMContentLoaded', (event) => {
     initSecurePopover();
     initCartDrawer();
     initCartBannerOverlay();
+    initSalesPopup();
 });
 
-function initSecurePopover() {
-
-    const secureBtnElementList = document.querySelectorAll('[data-secure-action]');
-    const secureCloseBtnElementList = document.querySelectorAll('[data-secure-close]');
-    const securePopoverElement = document.getElementById('secure-popover');
-
-    let popperInstanceList = [];
-
-    secureCloseBtnElementList.forEach(secureCloseBtnElement => {secureCloseBtnElement.addEventListener('click', hideSecure)})
-    
-    secureBtnElementList.forEach((secureBtnElement, index) => {
-        secureBtnElement.addEventListener('click', (event, secureBtnElement) => {handleSecureToggle(secureBtnElement, index)});
-
-        const popperInstance = Popper.createPopper(secureBtnElement, securePopoverElement, {
-            placement: 'top',
-            modifiers: [
-                {
-                    name: 'offset',
-                    options: {
-                        offset: [0, 24],
-                    },
-                },
-            ],
-        });
-        popperInstanceList.push(popperInstance)
-    })
-
-    function handleSecureToggle(secureBtnElement, index) {
-        securePopoverElement.classList.toggle('hidden');
-        popperInstanceList[index].update();
-    }
-
-    function hideSecure() {
-        securePopoverElement.classList.add('hidden');
-    }
-
-}
-
 function initCartDrawer() {
-    let drawerOpen = false;
-    const backdropOpacity = 0.4;
-
     const cartBtnElementList = document.querySelectorAll('[data-cart-open]');
     cartBtnElementList.forEach((cartBtnElement) => {
-        cartBtnElement.addEventListener('click', handleCartToggle);
+        cartBtnElement.addEventListener('click', (e) => {handleCartToggle(true);});
     })
 
     const cartCloseBtnElement = document.getElementById('cart-close-btn');
-    cartCloseBtnElement.addEventListener('click', handleCartToggle);
+    cartCloseBtnElement.addEventListener('click', (e) => {handleCartToggle(false);});
 
     const cartWrapperElement = document.getElementById('cart-drawer-overlay');
     const cartDrawerElement = document.getElementById('cart-drawer');
 
     cartWrapperElement.style.opacity = 0;
     cartDrawerElement.style.transform = 'translateX(100%)';
-    cartWrapperElement.addEventListener('click', handleCartToggle);
+    cartWrapperElement.addEventListener('click', (e) => {handleCartToggle(false);});
 
     updateCartCount();
 
-    function handleCartToggle() {
-
-        if(drawerOpen === false) {
-            cartWrapperElement.classList.remove('hidden');
-            cartDrawerElement.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-            setTimeout(() => {
-                cartWrapperElement.style.opacity = backdropOpacity;
-                cartDrawerElement.style.transform = 'translateX(0%)';
-            }, 20);
-            drawerOpen = true
-            handleCartFetch();
-        } else if(drawerOpen === true) {
-            cartWrapperElement.style.opacity = 0;
-            cartDrawerElement.style.transform = 'translateX(100%)';
-            cartWrapperElement.addEventListener('transitionend', () => {
-                cartWrapperElement.classList.add('hidden');
-                cartDrawerElement.classList.add('hidden');
-                document.body.style.overflow = '';
-                document.documentElement.style.overflow = '';
-            }, {once:true})
-            drawerOpen = false
-        }
-    }
-
-    function handleCartFetch() {
-        enableLoading()
-        const section = 'cart-content'
-        const elementCartDrawerContentSection = document.getElementById('cart-drawer-content');
-        fetch(window.Shopify.routes.root + "?sections=" + section)
-        .then((res) => {
-            if(!res.ok) {
-                throw new Error();
-            }
-            return res.json()
-        })
-        .then((data) => {
-            elementCartDrawerContentSection.innerHTML = data[section];
-            document.getElementById('shopify-section-'+section).classList.add('h-full', 'flex', 'flex-col', 'shrink', 'overflow-auto');
-        })
-        .catch((error) => {
-            console.error(error)
-        })
-        .finally(() => {
-            disableLoading()
-            initCartAction();
-            initSecurePopover();
-        })
-
-        function enableLoading() {
-            document.querySelector('[data-cart-drawer-state="default"]').classList.add('hidden');
-            document.querySelector('[data-cart-drawer-state="loading"]').classList.remove('hidden');
-        }
-
-        function disableLoading() {
-            document.querySelector('[data-cart-drawer-state="default"]').classList.remove('hidden');
-            document.querySelector('[data-cart-drawer-state="loading"]').classList.add('hidden');
-        }
-
-    }
-
-    function initCartAction() {
-
-        const cartDrawerElement = document.getElementById('cart-drawer')
-        const cartActionElementList = cartDrawerElement.querySelectorAll('[data-cart-action]')
-
-        const cartShopBtnElement = document.getElementById('cart-shop-btn');
-
-        if(cartShopBtnElement !== null) {
-            cartShopBtnElement.addEventListener('click', handleCartToggle);
-        }
-
-        cartActionElementList.forEach(cartActionElement => {
-            cartActionElement.addEventListener('click', handleCartAction)
-        })
-
-        function handleCartAction(event) {
-            let currentId = parseInt(event.currentTarget.dataset.cartItemId)
-            let currentQuantity = parseInt(event.currentTarget.dataset.cartItemQuantity)
-
-            let currentAction = event.currentTarget.dataset.cartAction
-            if(currentAction === 'minus') {
-                currentQuantity--;
-            } else if(currentAction === 'plus') {
-                currentQuantity++;
-            }
-
-            let formData = {
-                'line': currentId,
-                'quantity': currentQuantity
-            };
-    
-            fetch(window.Shopify.routes.root + 'cart/change.js', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then((res) => {
-                if(!res.ok) {
-                    throw new Error();
-                }
-                return res.json()
-            })
-            .then((data) => {
-                updateCartCount()
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-            .finally(() => {
-                handleCartFetch();
-            })
-
-        }
-    }
 }
 
 function initCartBannerOverlay() {
@@ -217,4 +60,99 @@ function initCartBannerOverlay() {
         
     }
 
+}
+
+function initSalesPopup() {
+
+    const salesCloseBtnElement = document.querySelector('[data-sales-close]')
+    salesCloseBtnElement.addEventListener('click', (e) => {
+        togglePopup(false)
+    })
+    togglePopup(false)
+
+    fetch('/products.json')
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+
+        const regionList = {
+            countries: ['UK', 'CA', 'USA'],
+            UK: ['Avon','Bedfordshire','Berkshire','Buckinghamshire','Cambridgeshire','Cheshire','Cleveland','Cornwall','Cumbria','Derbyshire','Devon','Dorset','Durham','East Sussex','Essex','Gloucestershire','Hampshire','Herefordshire','Hertfordshire','Isle of Wight','Kent','Lancashire','Leicestershire','Lincolnshire','London','Merseyside','Middlesex','Norfolk','Northamptonshire','Northumberland','North Humberside','North Yorkshire','Nottinghamshire','Oxfordshire','Rutland','Shropshire','Somerset','South Humberside','South Yorkshire','Staffordshire','Suffolk','Surrey','Tyne and Wear','Warwickshire','West Midlands','West Sussex','West Yorkshire','Wiltshire','Worcestershire'],
+            CA: ['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon Territory'],
+            USA: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],
+        }
+
+        let randomInterval = getRandomInt(4, 9)
+
+        setTimeout(() => {
+            generateRandomProduct()
+        }, randomInterval * 1000)
+
+        function generateRandomProduct() {
+            let randomProductSeed = getRandomInt(0, data.products.length)
+
+            let randomCountrySeed = getRandomInt(0, regionList.countries.length)
+            let randomDistrictSeed = getRandomInt(0, regionList[regionList.countries[randomCountrySeed]].length)
+            let randomRegion = regionList[regionList.countries[randomCountrySeed]][randomDistrictSeed]  + ', ' + regionList.countries[randomCountrySeed]
+
+            let randomTimeSeed = getRandomInt(1, 720)
+            let salesTimeText
+
+            if(randomTimeSeed >= 60) {
+                let salesTimeHour = Math.round(randomTimeSeed / 60)
+                salesTimeText = salesTimeHour === 1 ? `1 hour ago` : `${salesTimeHour} hours ago`
+            } else {
+                salesTimeText = randomTimeSeed === 1 ? `1 min ago` : `${randomTimeSeed} mins ago`
+            }
+    
+            let productTitle = data.products[randomProductSeed].title
+            let productMedia = data.products[randomProductSeed].images[0].src
+            let productHandle = data.products[randomProductSeed].handle
+            
+            let salesUrlElement = document.querySelector('[data-sales-url]')
+            salesUrlElement.setAttribute('href', `/products/${productHandle}`)
+            salesUrlElement.setAttribute('title', `/products/${productTitle}`)
+    
+            let salesMediaElement = document.querySelector('[data-sales-media]')
+            salesMediaElement.setAttribute('src', `${productMedia}`)
+            salesMediaElement.setAttribute('alt', `/products/${productTitle}`)
+    
+            let salesTitleElement = document.querySelector('[data-sales-title]')
+            salesTitleElement.textContent = productTitle
+            
+            let salesLocationElement = document.querySelector('[data-sales-location]')
+            salesLocationElement.textContent = randomRegion
+
+            let salesTimeElement = document.querySelector('[data-sales-time]')
+            salesTimeElement.textContent = salesTimeText
+
+            togglePopup(true)
+            setTimeout(() => {
+                togglePopup(false)
+                let randomInterval = getRandomInt(4, 9)
+                setTimeout(() => {
+                    generateRandomProduct()
+                }, randomInterval * 1000)
+            }, 5000)
+        }
+    })
+    
+    function togglePopup(state) {
+        
+        const salesPopupElement = document.querySelector('[data-sales-popup-element]')
+        
+        if(state === true) {
+            salesPopupElement.style.transform= 'translateY(0%)'
+        } else if(state === false) {
+            salesPopupElement.style.transform= 'translateY(200%)'
+        }
+
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    }
 }

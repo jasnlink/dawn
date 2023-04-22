@@ -6,15 +6,25 @@
                     <ul class="glide__slides">
                         {% for image in product.images %}
                             <li class="glide__slide">
-                                <picture>
-                                    <source srcset="{{ image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
-                                    <source srcset="{{ image | image_url: width: 580, height: 580 }}" media="(min-width:1280px)" />
-                                    <source srcset="{{ image | image_url: width: 476, height: 476 }}" media="(min-width:1024px)" />
-                                    <source srcset="{{ image | image_url: width: 724, height: 724 }}" media="(min-width:768px)" />
-                                    <source srcset="{{ image | image_url: width: 596, height: 596 }}" media="(min-width:640px)" />
-                                    <source srcset="{{ image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
-                                    <img src="{{ image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
-                                </picture>
+                                <div class="relative">
+                                    <picture>
+                                        <source srcset="{{ image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
+                                        <source srcset="{{ image | image_url: width: 580, height: 580 }}" media="(min-width:1280px)" />
+                                        <source srcset="{{ image | image_url: width: 476, height: 476 }}" media="(min-width:1024px)" />
+                                        <source srcset="{{ image | image_url: width: 724, height: 724 }}" media="(min-width:768px)" />
+                                        <source srcset="{{ image | image_url: width: 596, height: 596 }}" media="(min-width:640px)" />
+                                        <source srcset="{{ image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
+                                        <img src="{{ image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    </picture>
+                                    {% assign current_timestamp = 'now' | date: '%s' %}
+                                    {% assign product_created_timestamp = product.created_at | date: '%s' %}
+                                    {% assign time_elapsed_created = current_timestamp | minus: product_created_timestamp %}
+                                    {% if time_elapsed_created <= 2592000 %}
+                                        <div class="absolute top-4 right-4">
+                                            <div class="bg-pink-300 text-white text-sm rounded-lg px-4 py-1">New</div>
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -40,7 +50,7 @@
                         <div class="bg-pink-200 rounded-md px-2 py-1 text-sm font-semibold text-gray-700">{{ tag }}</div>
                     {% endfor %}
                 </div>
-                <div class="text-4xl font-semibold mt-4">{{ product.title }}</div>
+                <div class="text-4xl font-bold mt-4">{{ product.title }}</div>
                 <a href="#section-product-reviews" class="block">
                     <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }} mt-2"></div>
                 </a>
@@ -49,32 +59,32 @@
                     {% render 'product.section.variant-selector' %}
                 </div>
                 <div class="mt-4">
-                    <span>Availability:</span>
+                    <span class="font-medium">Availability:</span>
                     {% if product.available == true %}
-                        {% assign product_availability_text = 'In stock' %}
+                        {% assign product_availability_text = 'IN STOCK - Ships in 48hrs' %}
                         {% assign product_availability_class = ' bg-green-500' %}
                     {% else %}
-                        {% assign product_availability_text = 'Out of stock' %}
+                        {% assign product_availability_text = 'OUT OF STOCK' %}
                         {% assign product_availability_class = ' bg-red-500' %}
                     {% endif %}
-                    <span class="ml-2 rounded-md px-2 py-1 text-sm text-white {{ product_availability_class }}">{{ product_availability_text }}</span>
+                    <span class="ml-2 rounded-md px-2 py-1 text-sm text-white font-semibold {{ product_availability_class }}">{{ product_availability_text }}</span>
                 </div>
                 <div class="mt-4">
                     {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
                         <div class="line-through decoration-from-font text-gray-400">
-                            <span data-product-compare-price class="font-semibold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                            <span data-product-compare-price class="font-bold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
                         </div>
                     {% endif %}
                     <div class="flex items-center">
                         <span data-product-display-price class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
                         {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
-                            <span data-product-display-compare-save-price class="ml-2 leading-none h-fit w-fit py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs"><span>Save</span> <span data-product-compare-save-price>{{ product.price | minus: product.compare_at_price | money_with_currency }}</span></span>
+                            <span data-product-display-compare-save-price class="ml-2 leading-none h-fit w-fit font-semibold py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs"><span>Save</span> <span data-product-compare-save-price>{{ product.price | minus: product.compare_at_price | money_with_currency }}</span></span>
                         {% endif %}
                     </div>
                 </div>
                 {% render 'product-add-button',
                     product: product,
-                    btn_class: 'mt-8 w-full xl:w-1/2 bg-sky-500 text-lg text-white py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                    btn_class: 'mt-8 w-full xl:w-1/2 bg-sky-500 text-lg text-white py-4 sm:px-8 font-semibold rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
                     error_class: 'mx-auto h-7 w-7 text-white',
                     success_class: 'mx-auto h-7 w-7 text-white',
                     loading_class: 'animate-spin mx-auto h-7 w-7 text-white',
