@@ -386,9 +386,10 @@ export function initSecurePopover() {
 }
 
 export function reloadScript(src) {
-    document.querySelector('script[src*="'+src+'"]').remove();
+    let scriptToBeRemoved = document.querySelector('script[src*="'+src+'"]');
     let script = document.createElement('script');
-    script.setAttribute('src', src);
+    script.setAttribute('src', scriptToBeRemoved.getAttribute('src'));
+    scriptToBeRemoved.remove();
     document.head.appendChild(script);
 }
 
