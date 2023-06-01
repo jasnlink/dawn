@@ -386,7 +386,7 @@ export function initSecurePopover() {
 }
 
 export function reloadScript(src) {
-    document.querySelector('script[src="'+src+'"]').remove();
+    document.querySelector('script[src*="'+src+'"]').remove();
     let script = document.createElement('script');
     script.setAttribute('src', src);
     document.head.appendChild(script);

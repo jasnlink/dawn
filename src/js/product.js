@@ -127,11 +127,8 @@ function initProductRecommended() {
 
         const url = productRecommendationsSection.dataset.url;
 
-        console.log('url',url)
-
         fetch(url)
         .then((res) => {
-            console.log('res', res)
             if(!res.ok) {
                 console.log('error')
                 throw new Error;
@@ -147,7 +144,7 @@ function initProductRecommended() {
         .finally(() => {
             disableLoading();
             initAddCartAction();
-            reloadScript('https://cdn.alireviews.io/box/js/frontend/45/iframe.js?version=5.4.9')
+            reloadScript('alireviews.min.js')
             new Glide('.glide-recommended', {
                 type: 'carousel',
                 startAt: 0,

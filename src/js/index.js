@@ -35,7 +35,7 @@ function initPagination() {
             moveChildNodes(section)
             .then(() => {
                 disableLoading();
-                reloadScript('https://cdn.alireviews.io/box/js/frontend/45/iframe.js?version=5.4.9')
+                reloadScript('alireviews.min.js')
                 initAddCartAction();
                 if(currentIndex === maxIndex) {
                     elementPaginationBtn.classList.add('hidden');
