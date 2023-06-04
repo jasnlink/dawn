@@ -1,5 +1,5 @@
 {% if product.available == true %}
-    {% if product.has_only_default_variant or type != 'product-card' %}
+    {% if product.has_only_default_variant or type == 'product-page' %}
         <button type="button" data-animation-source="cart" data-add-cart="{{ product.selected_or_first_available_variant.id }}" class="{{ btn_class }}">
             <span data-add-state="error" class="hidden">{% render 'icon-error', class: error_class, fill: 'none' %}</span>
             <span data-add-state="success" class="hidden">{% render 'icon-success', class: success_class, fill: 'none' %}</span>
