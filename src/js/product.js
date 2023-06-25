@@ -21,7 +21,6 @@ function initVariantSelector() {
     document.querySelectorAll('[data-selector-element-type]').forEach(selectorElement => {
         let selectorType = selectorElement.dataset.selectorElementType
         if(selectorType === 'button') {
-            document.querySelectorAll('[data-selector-element-type="button"] [data-selector-default]').forEach(element => handleSelection(element))
             let selectorActionElementList = document.querySelectorAll('[data-selector-action]');
             selectorActionElementList.forEach(element => {
                 element.addEventListener('click', event => {
@@ -30,13 +29,39 @@ function initVariantSelector() {
                 })
             })
         } else if(selectorType === 'dropdown') {
-            document.querySelectorAll('[data-selector-element-type="dropdown"] [data-selector-default]').forEach(element => handleSelection(element))
             selectorElement.addEventListener('change', event => {
                 event.preventDefault();
                 let selectedOption = event.target.options[event.target.options.selectedIndex]
                 handleSelection(selectedOption);
             })
         }
+        
+
+        checkHistory();
+
+        function checkHistory() {
+
+            //Check if variant ID already fed in, if not then select default
+            const queryString = window.location.search;
+            const currentUrlParams = new URLSearchParams(queryString);
+            if(currentUrlParams.has('variant')) {
+                const variantId = currentUrlParams.get('variant');
+                const variantElement = getVariantById(variantId);
+                
+                document.querySelectorAll('[data-selector-option-group-index]').forEach(element => {
+                    let targetOptionIndex = parseInt(element.dataset.selectorOptionGroupIndex)
+                    const optionValue = variantElement.getAttribute(`data-selector-variant-option-${targetOptionIndex}`)
+                    const optionElement = document.querySelectorAll(`[data-selector-option-group-index="${targetOptionIndex}"] [data-selector-option-value="${optionValue}"]`)
+                    optionElement.forEach((element) => {
+                        handleSelection(element)
+                    })
+                })
+                
+            } else {
+                document.querySelectorAll('[data-selector-element-type] [data-selector-default]').forEach(element => handleSelection(element))
+            }
+        }
+
     })
 
     function handleSelection(element) {
@@ -66,6 +91,10 @@ function initVariantSelector() {
         searchVariantList()
     }
 
+    function getVariantById(variantId) {
+        return document.querySelector(`[data-selector-variant-id="${variantId}"]`)
+    }
+
     function searchVariantList() {
         let search = ''
         Object.keys(selectionState).forEach((key) => {
@@ -73,6 +102,11 @@ function initVariantSelector() {
         })
         let foundElement = document.querySelector(search)
         if(foundElement) {
+            // update URL with new selected variant
+            const url = new URL(window.location);
+            url.searchParams.set('variant', foundElement.getAttribute('data-selector-variant-id'))
+            history.replaceState({}, "", url);
+
             document.querySelectorAll('[data-add-cart]').forEach(element => {
                 element.dataset.addCart = foundElement.dataset.selectorVariantId
                 element.disabled = false
