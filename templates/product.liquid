@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="h-full pt-6 lg:pt-2 xl:pt-24">
+        <div class="h-full pt-6">
             <div class="container py-4 mx-auto">
                 <div class="inline-flex gap-2">
                     {% for collection in product.collections %}
@@ -82,7 +82,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="w-full xl:w-1/2 flex flex-col gap-4">
+                <div class="w-full flex flex-col gap-4">
                     {% render 'product-add-button',
                         product: product,
                         type: 'product-page',
