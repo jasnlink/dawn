@@ -107,6 +107,10 @@ function initVariantSelector() {
             url.searchParams.set('variant', foundElement.getAttribute('data-selector-variant-id'))
             history.replaceState({}, "", url);
 
+            document.querySelectorAll('[data-buy-now]').forEach(element => {
+                element.value = foundElement.dataset.selectorVariantId
+            })
+
             document.querySelectorAll('[data-add-cart]').forEach(element => {
                 element.dataset.addCart = foundElement.dataset.selectorVariantId
                 element.disabled = false

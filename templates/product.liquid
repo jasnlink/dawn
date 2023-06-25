@@ -93,6 +93,16 @@
                         out_of_stock_class: 'mt-8 w-full text-lg text-white py-4 sm:px-8 rounded-md text-center select-none opacity-75 bg-sky-800'
                     %}
                     {% form 'product', product %}
+                        {%- comment -%}
+                            This value needs to be updated with the variant id so that the buy now button works
+                        {%- endcomment -%}
+                        <input
+                            data-buy-now
+                            type="hidden"
+                            name="id"
+                            value="{{ product.selected_or_first_available_variant.id }}"
+                            disabled
+                        >
                         {{ form | payment_button }}
                     {% endform %}
                 </div>
