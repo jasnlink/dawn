@@ -1,0 +1,30 @@
+<div data-overlay-action class="hidden w-full bg-pink-100 pt-1 pb-2">
+    <div class="flex items-center justify-center gap-4 lg:gap-12">
+        <div class="flex flex-col justify-center gap-1">
+            <div>
+                {% render 'product.section.variant-selector',
+                    type: 'dropdown'
+                %}
+            </div>
+        </div>
+        <div>
+            <div>
+                {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                    <div class="line-through decoration-from-font text-gray-400">
+                        <span data-product-compare-price class="text-[0.65rem] leading-[0.9] font-bold tracking-wide">{{ product.compare_at_price | money_with_currency }}</span>
+                    </div>
+                {% endif %}
+                <div data-product-display-price class="text-base leading-[0.9] font-extrabold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</div>
+            </div>
+            {% render 'product-add-button',
+                product: product,
+                type: 'product-page',
+                btn_class: 'mt-1 w-full bg-sky-500 text-base text-white py-1 px-4 font-semibold rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                error_class: 'mx-auto h-6 w-6 text-white',
+                success_class: 'mx-auto h-6 w-6 text-white',
+                loading_class: 'animate-spin mx-auto h-6 w-6 text-white',
+                out_of_stock_class: 'mt-1 w-full text-base text-white py-1 px-4 rounded-md text-center select-none opacity-75 bg-sky-800'
+            %}
+        </div>
+    </div>
+</div>

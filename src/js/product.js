@@ -7,7 +7,79 @@ window.addEventListener('DOMContentLoaded', (event) => {
     initAddCartAction();
     initProductRecommended();
     initVariantSelector();
+    initVideoEmbed();
+    initPurchaseOverlay();
 });
+
+function initPurchaseOverlay() {
+    let options = {
+        rootMargin: '0px',
+        threshold: 1.0
+    }
+
+    let observeElement = document.querySelector('[data-overlay-listen]')
+    let observer = new IntersectionObserver(handleIntersect, options);
+    observer.observe(observeElement);
+
+    function handleIntersect(entries) {
+        entries.forEach((entry) => {
+            // isIntersecting means we see the target element (add to cart button), we also check if we are above the entry
+            if (entry.isIntersecting || entry.boundingClientRect.top > 0) {
+                document.querySelector('[data-overlay-action]').classList.add('hidden')
+            } else {
+                document.querySelector('[data-overlay-action]').classList.remove('hidden')
+            }
+        });
+    }
+}
+
+function initVideoEmbed() {
+    const videoEmbedSection = document.querySelector(`[data-social-media-video-embed-state="default"]`)
+    if (!videoEmbedSection) {
+        return
+    }
+    enableLoading()
+    const embedElements = document.querySelectorAll(`[data-social-media-video-embed-state="default"] [data-video-url]`)
+    let embedQueue = []
+
+    embedElements.forEach((element) => embedQueue.push(fetchEmbedHtml(element.getAttribute(`data-video-url`), element).catch(err => console.error(err))))
+    
+    Promise.all(embedQueue)
+    .then(() => {
+        reloadScript(`https://www.tiktok.com/embed.js`)
+        .then(() => {
+            disableLoading()
+        })
+    })
+
+    function fetchEmbedHtml(videoUrl, element) {
+        return new Promise((resolve, reject) => {
+            fetch(`https://www.tiktok.com/oembed?url=${videoUrl}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(response)
+                }
+                return response.json()
+            })
+            .then((data) => {
+                element.innerHTML = data.html
+                resolve()
+            })
+            .catch(err => reject(err));
+
+        })
+    }
+
+    function enableLoading() {
+        document.querySelector('[data-social-media-video-embed-state="default"]').classList.add('hidden');
+        document.querySelector('[data-social-media-video-embed-state="loading"]').classList.remove('hidden');
+    }
+
+    function disableLoading() {
+        document.querySelector('[data-social-media-video-embed-state="default"]').classList.remove('hidden');
+        document.querySelector('[data-social-media-video-embed-state="loading"]').classList.add('hidden');
+    }
+}
 
 function initVariantSelector() {
 

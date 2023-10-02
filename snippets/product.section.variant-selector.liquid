@@ -9,15 +9,19 @@
                         {{ data_option }}
                     {% endfor %}
                 {% endcapture %}
-                <div data-selector-variant-id="{{ variant.id }}" data-selector-variant-price="{{ variant.price | money_with_currency }}"{% if variant.compare_at_price != blank and variant.compare_at_price > variant.price %} data-selector-variant-compare-price="{{ variant.compare_at_price | money_with_currency }}" data-selector-variant-compare-save-price="{{ variant.price | minus: variant.compare_at_price | money_with_currency }}"{% endif %}{{ data_variant_options }}></div>
+                <div data-selector-variant-id="{{ variant.id }}" data-selector-variant-price="{{ variant.price | money_with_currency }}"{% if variant.compare_at_price != blank and variant.compare_at_price > variant.price %} data-selector-variant-compare-price="{{ variant.compare_at_price | money_with_currency }}" data-selector-variant-compare-save-price="{{ variant.compare_at_price | minus: variant.price | money_with_currency }}"{% endif %}{{ data_variant_options }}></div>
             {% endif %}
         {% endfor %}
     </div>
     <div>
         {% for product_option in product.options_with_values %}
+            {%- assign textSize = 'text-xl' -%}
+            {% if size == 'small' %}
+                {%- assign textSize = 'text-base' -%}
+            {% endif %}
             <div data-selector-option-group-index="{{ forloop.index }}">
-                <label class="font-bold text-xl">{{ product_option.name }}</label>
-                <select data-selector-element-type="dropdown" class="ml-2 rounded-md text-xl">
+                <label class="font-bold {{ textSize }}">{{ product_option.name }}</label>
+                <select data-selector-element-type="dropdown" class="ml-2 rounded-md {{ textSize }}">
                     {% for product_option_value in product_option.values %}
                         <option value="{{ product_option_value }}"{% if product_option.selected_value == product_option_value %} data-selector-default{% endif %} data-selector-option-index="{{ forloop.index0 }}" data-selector-action="{{ product_option.position }}" data-selector-option-value="{{ product_option_value | downcase | replace: ' ', '_' }}">{{ product_option_value }}</option>
                     {% endfor %}

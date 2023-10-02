@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "shopify theme dev --store=plushies-inc-ca",
     "tw": "npx tailwindcss -i ./input.css -o ./assets/output.css --watch",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",

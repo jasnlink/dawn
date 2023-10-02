@@ -9,7 +9,7 @@
     <div id="cart-drawer-items" class="shrink overflow-auto">
         <div class="container mt-4 mb-5 mx-auto flex flex-col gap-y-2">
             {% for line_item in cart.items %}
-                <div class="flex items-center bg-pink-100 rounded-md gap-x-4">
+                <div data-cart-line-item="{{ line_item.product_id }}" class="flex items-center bg-pink-100 rounded-md gap-x-4">
                     <div>
                         <a href="{{ line_item.url }}" class="block aspect-square w-32 h-32 select-none">
                             <picture>
@@ -41,22 +41,26 @@
             {% endfor %}
         </div>
     </div>
-    <div id="cart-drawer-footer" class="mt-auto shrink bg-pink-300">
-        <div class="pt-6 pb-7">
+    <div id="cart-drawer-footer" class="mt-auto shrink">
+        <div class="text-center py-2 px-2 bg-pink-100">
+            <div class="font-extrabold text-lg mb-2">Grab Extra Hugs!</div>
+            <div id="cart-drawer-recommended"></div>
+        </div>
+        <div class="pt-1 pb-1 bg-pink-200">
             <div class="container mx-auto px-8 xl:px-24 text-black">
                 <div class="flex justify-between">
                     <div class="font-medium">Subtotal</div>
                     <div class="font-bold">{{ cart.items_subtotal_price | money_with_currency }}</div>
                 </div>
-                <div class="mt-2 flex justify-between">
+                <div class="flex justify-between">
                     <div class="font-medium">Shipping</div>
                     <div class="font-bold">FREE</div>
                 </div>
-                <a href="{{ routes.root_url | append: 'checkout' }}" class="block w-full mt-4 bg-sky-500 text-white font-semibold text-lg py-4 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
+                <a href="{{ routes.root_url | append: 'checkout' }}" class="block w-full mt-2 bg-sky-500 text-white font-semibold text-lg py-2 sm:px-8 rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600">Checkout now</a>
             </div>
         </div>
         <div class="bg-pink-400">
-            <div class="mx-auto pt-2 pb-3">
+            <div class="mx-auto pt-1 pb-1">
                 <div class="flex flex-col gap-y-3 lg:flex-row items-center justify-center gap-x-4">
                     <div class="inline-flex justify-center gap-y-2 gap-x-0.5 flex-wrap">
                         {% for type in shop.enabled_payment_types -%}
@@ -64,7 +68,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div id="cart" data-secure-action role="button" class="w-fit mt-4 mx-auto text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-2 px-3 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
+                <div id="cart" data-secure-action role="button" class="w-fit mt-1 mx-auto text-xs text-black font-bold flex justify-center items-center gap-x-2 bg-green-400 py-1 px-2 rounded-md select-none hover:bg-green-300 active:bg-green-500">{% render 'icon-secure', class: 'h-4 w-auto fill-black' %} <span>SSL ENCRYPTED | SECURE PAYMENTS</span></div>
             </div>
         </div>
     </div>

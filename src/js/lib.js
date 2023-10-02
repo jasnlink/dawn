@@ -1,8 +1,11 @@
+import Glide from "@glidejs/glide";
+
 export function initAddCartAction() {
 
     const addCartActionElementList = document.querySelectorAll('[data-add-cart]');
 
     addCartActionElementList.forEach((element) => {
+        element.removeEventListener('click', handleAddCart)
         element.addEventListener('click', handleAddCart);
     })
 
@@ -124,9 +127,10 @@ export function initAddCartAction() {
         function pushGtagAddCartEvent(pushId) {
 
             const itemInfoElement = document.querySelector('[data-info-variant-id="'+ pushId +'"]')
+
             gtag("event", "add_to_cart", {
                 currency: itemInfoElement.getAttribute('data-info-currency'),
-                value: itemInfoElement.getAttribute('data-info-variant-price'),
+                value: parseFloat(itemInfoElement.getAttribute('data-info-variant-price')),
                 items: [
                     {
                         item_id: itemInfoElement.getAttribute('data-info-product-id'),
@@ -134,7 +138,7 @@ export function initAddCartAction() {
                         item_brand: itemInfoElement.getAttribute('data-info-product-vendor'),
                         item_category: itemInfoElement.getAttribute('data-info-product-collection'),
                         item_variant: itemInfoElement.getAttribute('data-info-variant-id'),
-                        price: itemInfoElement.getAttribute('data-info-variant-price'),
+                        price: parseFloat(itemInfoElement.getAttribute('data-info-variant-price')),
                         quantity: 1
                     }
                 ]
@@ -155,7 +159,7 @@ export function initAddCartAction() {
                         item_brand: itemInfoElement.getAttribute('data-info-product-vendor'),
                         item_category: itemInfoElement.getAttribute('data-info-product-collection'),
                         item_variant: itemInfoElement.getAttribute('data-info-variant-id'),
-                        price: itemInfoElement.getAttribute('data-info-variant-price'),
+                        price: parseFloat(itemInfoElement.getAttribute('data-info-variant-price')),
                         quantity: 1
                     }
                 ]
@@ -241,7 +245,7 @@ export function handleCartToggle(state) {
             cartWrapperElement.style.opacity = backdropOpacity;
             cartDrawerElement.style.transform = 'translateX(0%)';
         }, 20);
-        handleCartFetch();
+        handleCartFetch()
     } else if(state === false) {
         cartWrapperElement.style.opacity = 0;
         cartDrawerElement.style.transform = 'translateX(100%)';
@@ -255,28 +259,85 @@ export function handleCartToggle(state) {
 }
 
 export function handleCartFetch() {
-    enableLoading()
-    const section = 'cart-content'
-    const elementCartDrawerContentSection = document.getElementById('cart-drawer-content');
-    fetch(window.Shopify.routes.root + "?sections=" + section)
-    .then((res) => {
-        if(!res.ok) {
-            throw new Error();
-        }
-        return res.json()
+    return new Promise((resolve) => {
+        enableLoading()
+        const section = 'cart-content'
+        const elementCartDrawerContentSection = document.getElementById('cart-drawer-content');
+        fetch(window.Shopify.routes.root + "?sections=" + section)
+        .then((res) => {
+            if(!res.ok) {
+                throw new Error();
+            }
+            return res.json()
+        })
+        .then((data) => {
+            elementCartDrawerContentSection.innerHTML = data[section];
+            document.getElementById('shopify-section-'+section).classList.add('h-full', 'flex', 'flex-col', 'shrink', 'overflow-auto');
+            return
+        })
+        .then(async () => {
+            const elementCartRecommendedSection = document.getElementById(`cart-drawer-recommended`)
+            const cartLineItems = document.querySelectorAll(`#cart-drawer-items [data-cart-line-item]`)
+            if (!cartLineItems.length || !elementCartRecommendedSection) {
+                return
+            }
+            handleCartRecommendedFetch(cartLineItems[cartLineItems.length-1].getAttribute(`data-cart-line-item`), elementCartRecommendedSection)
+            .then(() => {
+                if (elementCartRecommendedSection.innerHTML.trim().length) {
+                    initAddCartAction();
+                    reloadScript('alireviews.min.js')
+                    new Glide('.glide-cart-recommended', {
+                        type: 'carousel',
+                        startAt: 0,
+                        perView: 3,
+                        gap: 4,
+                        breakpoints: {
+                            1536: {
+                                perView: 3
+                            },
+                            1024: {
+                                perView: 3
+                            },
+                            640: {
+                                perView: 3
+                            }
+                        }
+                    }).mount();
+                }
+                return
+            })
+            return
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+        .finally(() => {
+            disableLoading()
+            initCartAction();
+            initSecurePopover();
+            resolve()
+        })
     })
-    .then((data) => {
-        elementCartDrawerContentSection.innerHTML = data[section];
-        document.getElementById('shopify-section-'+section).classList.add('h-full', 'flex', 'flex-col', 'shrink', 'overflow-auto');
-    })
-    .catch((error) => {
-        console.error(error)
-    })
-    .finally(() => {
-        disableLoading()
-        initCartAction();
-        initSecurePopover();
-    })
+
+    function handleCartRecommendedFetch(productId, recommendedSection) {
+        return new Promise((resolve, reject) => {
+            const sectionFetch = `cart-product-recommended`
+            fetch(`${window.Shopify.routes.root}recommendations/products?product_id=${productId}&limit=8&section_id=${sectionFetch}&intent=related`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error()
+                }
+                return res.text()
+            })
+            .then((data) => {
+                recommendedSection.innerHTML = data
+                if (recommendedSection.innerHTML.trim().length) {
+                    resolve()
+                }
+            })
+            .catch(err => reject(err))
+        })
+    }
 
     function enableLoading() {
         document.querySelector('[data-cart-drawer-state="default"]').classList.add('hidden');
@@ -386,11 +447,24 @@ export function initSecurePopover() {
 }
 
 export function reloadScript(src) {
-    let scriptToBeRemoved = document.querySelector('script[src*="'+src+'"]');
-    let script = document.createElement('script');
-    script.setAttribute('src', scriptToBeRemoved.getAttribute('src'));
-    scriptToBeRemoved.remove();
-    document.head.appendChild(script);
+    return new Promise((resolve, reject) => {
+        let scriptToBeRemoved = document.querySelector('script[src*="'+src+'"]');
+        if (!scriptToBeRemoved) {
+            reject(new Error(`No script found with src: ${src}`));
+            return;
+        }
+        let script = document.createElement('script');
+        script.setAttribute('src', scriptToBeRemoved.getAttribute('src'));
+        scriptToBeRemoved.remove();
+        document.head.appendChild(script);
+        const reloadedScript = document.querySelector('script[src*="'+src+'"]');
+        reloadedScript.addEventListener(`load`, () => {
+            resolve()
+        }, {once:true})
+        script.addEventListener('error', () => {
+            reject(new Error(`Failed to reload script: ${src}`));
+        }, {once: true});
+    })
 }
 
 export function getScriptContent(src) {

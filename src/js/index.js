@@ -2,7 +2,7 @@ import { initAddCartAction } from "./lib";
 import { reloadScript } from "./lib";
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    initPagination();
+    //initPagination();
 });
 
 function initPagination() {

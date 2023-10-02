@@ -46,9 +46,9 @@
                     {% for collection in product.collections %}
                         <div class="bg-pink-200 rounded-md px-2 py-1 text-sm font-semibold text-gray-700">{{ collection.title }}</div>
                     {% endfor %}
-                    {% for tag in product.tags %}
+                    {% comment %} {% for tag in product.tags %}
                         <div class="bg-pink-200 rounded-md px-2 py-1 text-sm font-semibold text-gray-700">{{ tag }}</div>
-                    {% endfor %}
+                    {% endfor %} {% endcomment %}
                 </div>
                 <div class="text-4xl font-bold mt-4">{{ product.title }}</div>
                 <a href="#section-product-reviews" class="block">
@@ -61,7 +61,7 @@
                 <div class="mt-4">
                     <span class="font-medium">Availability:</span>
                     {% if product.available == true %}
-                        {% assign product_availability_text = 'IN STOCK - Ships in 48hrs' %}
+                        {% assign product_availability_text = 'IN STOCK' %}
                         {% assign product_availability_class = ' bg-green-500' %}
                     {% else %}
                         {% assign product_availability_text = 'OUT OF STOCK' %}
@@ -78,11 +78,11 @@
                     <div class="flex items-center">
                         <span data-product-display-price class="text-3xl font-bold">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
                         {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
-                            <span data-product-display-compare-save-price class="ml-2 leading-none h-fit w-fit font-semibold py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs"><span>Save</span> <span data-product-compare-save-price>{{ product.price | minus: product.compare_at_price | money_with_currency }}</span></span>
+                            <span data-product-display-compare-save-price class="ml-2 leading-none h-fit w-fit font-semibold py-1 px-2 text-green-800 bg-green-400 rounded-md text-xs"><span>Save</span> <span data-product-compare-save-price>{{ product.compare_at_price | minus: product.price | money_with_currency }}</span></span>
                         {% endif %}
                     </div>
                 </div>
-                <div class="w-full flex flex-col gap-4">
+                <div data-overlay-listen class="w-full flex flex-col gap-4">
                     {% render 'product-add-button',
                         product: product,
                         type: 'product-page',
@@ -112,6 +112,7 @@
     {% section 'product-size-guide' %}
     {% section 'product-showcase' %}
     {% section 'product-badge-list' %}
+    {% section 'product-video-embed' %}
     <div class="mt-12" id="section-product-reviews">
         {% section 'alireviews-widget-473839' %}  
     </div>

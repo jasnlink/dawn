@@ -1,0 +1,79 @@
+<div data-cart-recommended-content>
+    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+        <div class="glide-cart-recommended relative">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    {% for product in recommendations.products %}
+                        <li class="glide__slide">
+                            <div class="block">
+                                {% render 'product.section.info',
+                                    product: product
+                                %}
+                                <div class="relative">
+                                    <picture>
+                                        <source srcset="{{ product.featured_image | image_url: width: 720, height: 720 }}" media="(min-width:1536px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 580, height: 580 }}" media="(min-width:1280px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 476, height: 476 }}" media="(min-width:1024px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 724, height: 724 }}" media="(min-width:768px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 596, height: 596 }}" media="(min-width:640px)" />
+                                        <source srcset="{{ product.featured_image | image_url: width: 628, height: 628 }}" media="(min-width:0px)" />
+                                        <img src="{{ product.featured_image | image_url: width: 628, height: 628 }}" height="200" width="200" loading="lazy" class="w-full h-auto object-cover rounded-md" />
+                                    </picture>
+                                    <div product-id="{{ product.id }}" class="absolute bottom-0 left-1/2 -translate-x-1/2 bg-pink-50 py-1 px-1 rounded-lg scale-75 arv-collection arv-collection--{{ product.id }} text-xs mt-0.5 font-bold"></div>
+                                    {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                                        <div class="absolute top-0 left-0 mt-0.5 ml-1">
+                                            <span class="ml-0.5 leading-[0.95] h-fit w-fit py-0.5 px-1 text-green-800 bg-green-400 rounded-md font-semibold text-[0.65rem]">Save {{ product.compare_at_price | minus: product.price | money_with_currency }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="px-1">
+                                    <div class="mt-1 leading-[0.9]">
+                                        <span class="text-sm tracking-tight leading-none">{{ product.title }}</span>
+                                    </div>
+                                    <div class="mt-0.5">
+                                        {% if product.compare_at_price != blank and product.compare_at_price > product.price %}
+                                            <div class="leading-none line-through decoration-from-font text-gray-500">
+                                                {% unless product.has_only_default_variant %}
+                                                    <span class="text-[0.75rem] mr-0.5">From </span>
+                                                {% endunless %}
+                                                <span class="text-[0.75rem] font-bold">{{ product.compare_at_price | money_with_currency }}</span>
+                                            </div>
+                                        {% endif %}
+                                        <div class="flex items-center justify-center leading-[0.95]">
+                                            {% unless product.has_only_default_variant %}
+                                                <span class="mr-0.5 text-[0.75rem]">From </span>
+                                            {% endunless %}
+                                            <span class="font-extrabold text-[0.75rem]">{{ product.price | money_with_currency }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% render 'product-add-button',
+                                product: product,
+                                btn_class: 'mt-1 w-full bg-sky-500 text-white font-semibold py-1 text-xs rounded-md text-center select-none hover:bg-sky-400 active:bg-sky-600 disabled:opacity-75 disabled:bg-sky-800',
+                                error_class: 'mx-auto h-4 w-4 text-white',
+                                success_class: 'mx-auto h-4 w-4 text-white',
+                                loading_class: 'animate-spin mx-auto h-4 w-4 text-white',
+                                out_of_stock_class: 'mt-1 w-full text-white py-1 text-xs rounded-md text-center select-none opacity-75 bg-sky-800'
+                            %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="absolute top-1/2 -translate-y-1/2 ml-4">
+                <div data-glide-el="controls">
+                    <div role="button" data-glide-dir="<" class="h-8 w-8 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">
+                        <div>{% render 'icon-prev', class: 'h-6 w-6 text-white fill-white' %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 mr-4">
+                <div data-glide-el="controls">
+                    <div role="button" data-glide-dir=">" class="h-8 w-8 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">
+                        <div>{% render 'icon-next', class: 'h-6 w-6 text-white fill-white' %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+</div>

@@ -1,13 +1,32 @@
-{%- assign collection_handle = 'frontpage' -%}
-{% paginate collections[collection_handle].products by 20 %}
-    <div data-paginate-max="{{ paginate.pages }}" class="hidden"></div>
-{% endpaginate %}
+{%- assign new_collection = collections['new-arrivals'] -%}
+{%- assign featured_collection = collections['frontpage'] -%}
 <div id="main-content" class="container pt-12 pb-16 mx-auto">
-    <div data-paginated-products class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12"></div>
-    <div class="mt-12">
-        <button data-paginate-more class="block mx-auto w-fit py-2 px-8 bg-sky-500 text-white font-semibold rounded-md disabled:opacity-75 select-none hover:bg-sky-400 active:bg-sky-600">
-            <span data-paginate-state="loading" class="hidden">{% render 'icon-loading', class: 'animate-spin mx-auto h-6 w-6 text-white' %}</span>
-            <span data-paginate-state="default">See more</span>
-        </button>
-    </div>
+    {% paginate featured_collection.products by 20 %}
+        {% if paginate.current_page == 1 %}
+            <h2 class="font-extrabold text-4xl mb-4">New Arrivals</h2>
+            <div class="mb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+                {% for product in new_collection.products limit: 12 %}
+                    {% render 'product-card', product: product %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h2 class="font-extrabold text-4xl mb-4">Our Plushies</h2>
+        <div data-paginated-products class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+            {% for product in featured_collection.products %}
+                {% render 'product-card', product: product %}
+            {% endfor %}
+        </div>
+        <div class="mt-12 text-center flex gap-x-4 justify-center text-xl">
+            {% if paginate.previous != blank %}
+                <a href="{{ paginate.previous.url }}" class="h-8 w-8 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">{% render 'icon-prev', class: 'h-6 w-6 text-white fill-white' %}</a>
+            {% else %}
+                <div class="h-8 w-8 flex items-center justify-center bg-sky-700 rounded-full select-none">{% render 'icon-prev', class: 'h-6 w-6 text-white fill-white' %}</div>
+            {% endif %}
+            {% if paginate.next != blank %}
+                <a href="{{ paginate.next.url }}" class="h-8 w-8 flex items-center justify-center bg-sky-500 rounded-full select-none hover:bg-sky-400 active:bg-sky-600">{% render 'icon-next', class: 'h-6 w-6 text-white fill-white' %}</a>
+            {% else %}
+                <div class="h-8 w-8 flex items-center justify-center bg-sky-700 rounded-full select-none">{% render 'icon-next', class: 'h-6 w-6 text-white fill-white' %}</div>
+            {% endif %}
+        </div>
+    {% endpaginate %}
 </div>
