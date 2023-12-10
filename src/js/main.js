@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     initSecurePopover();
     initCartDrawer();
     initCartBannerOverlay();
-    initSalesPopup();
+    //initSalesPopup();
 });
 
 function initCartDrawer() {
